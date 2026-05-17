@@ -74,14 +74,14 @@
            Cria a divisão da tela principal em duas partes
            ========================================== */
         .main-columns {
-            display: block; /* Padrão block */
-            margin-top: 60px;
+            display: block; /* Padrão block para celular */
+            margin-top: 40px;
             animation: fadeIn 0.8s ease-out;
         }
 
         /* Coluna Esquerda: Apresentação da Locapp */
         .column-left {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .column-left h1 {
@@ -106,37 +106,38 @@
         .column-right {
             display: flex;
             flex-direction: column;
-            gap: 25px; /* Espaço entre um anúncio e outro */
+            gap: 15px; /* Diminuído o espaço entre um anúncio e outro */
         }
 
         /* ==========================================
-           4. DESIGN DOS CARDS DE ANÚNCIO (ADS BOX)
-           Estilo visual premium para os blocos de propaganda
+           4. DESIGN DOS CARDS DE ANÚNCIO (COMPACTOS)
+           Estilo visual reduzido para caber mais anúncios
            ========================================== */
         .ads-card {
             background: linear-gradient(135deg, #1e1e1e 0%, #152523 100%);
-            border: 2px solid #64D2C1; /* Borda chamativa na cor do site */
-            border-radius: 24px;
-            padding: 25px;
+            border: 1px solid rgba(100, 210, 193, 0.4); /* Linha mais fina e discreta */
+            border-radius: 16px; /* Bordas um pouco menos arredondadas para economizar espaço */
+            padding: 18px;       /* Reduzido o espaçamento interno (antes era 25px) */
             position: relative;
             overflow: hidden;
-            box-shadow: 0 12px 40px rgba(100, 210, 193, 0.08);
-            transition: transform 0.3s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, border-color 0.3s;
         }
 
         .ads-card:hover {
-            transform: translateY(-4px); /* Sobe de leve ao passar o mouse */
+            transform: translateY(-2px);
+            border-color: #64D2C1; /* Destaca a borda ao passar o mouse */
         }
 
-        /* Etiqueta de identificação de anúncio */
+        /* Etiqueta pequena de anúncio */
         .ads-badge {
             position: absolute;
-            top: 12px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 9px;
+            top: 10px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
             color: #64D2C1;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -144,10 +145,11 @@
         }
 
         .ads-card h2 {
-            font-size: 22px;
+            font-size: 18px; /* Título menor para não ocupar muitas linhas */
             color: #ffffff;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 800;
+            padding-right: 60px; /* Evita que o título bata na etiqueta "Parceiro" */
         }
 
         .ads-card h2 span {
@@ -155,25 +157,26 @@
         }
 
         .ads-card p {
-            font-size: 14px;
-            color: #ccc;
-            margin-bottom: 15px;
+            font-size: 13px; /* Texto descritivo mais compacto */
+            color: #b3b3b3;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
 
         /* Tags de sub-serviços do anúncio */
         .ads-tags {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .tag {
-            background: rgba(255, 255, 255, 0.05);
-            color: #999;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 11px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #aaa;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: 600;
         }
 
@@ -200,22 +203,26 @@
             box-shadow: 0 8px 25px rgba(100, 210, 193, 0.3);
         }
 
-        /* Botão interno dos cards de anúncio */
+        /* Botão interno dos anúncios (Mais discreto e menor) */
         .btn-ads {
-            background: #ffffff;
-            color: #121212;
-            padding: 12px 20px;
-            font-size: 13px;
-            font-weight: 800;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 8px;
             text-decoration: none;
             display: inline-block;
             transition: 0.3s;
+            width: 100%; /* Ocupa a largura total do card no formato compacto */
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .btn-ads:hover {
             background: #64D2C1;
+            color: #121212;
+            border-color: #64D2C1;
         }
 
         /* ==========================================
@@ -223,7 +230,7 @@
            Lista de soluções padrão em grade de 3 colunas
            ========================================== */
         .features {
-            padding: 80px 0 40px 0;
+            padding: 60px 0 40px 0;
         }
 
         .section-title {
@@ -292,7 +299,6 @@
            Ajusta o layout lado a lado para computadores
            ========================================== */
         @media (min-width: 992px) {
-            /* Ativa as colunas paralelas apenas em computadores/telas grandes */
             .main-columns {
                 display: table;
                 width: 100%;
@@ -302,14 +308,15 @@
                 display: table-cell;
                 width: 55%;
                 vertical-align: middle;
-                padding-right: 60px;
+                padding-right: 50px;
                 margin-bottom: 0;
                 text-align: left;
             }
             .column-right {
                 display: table-cell;
                 width: 45%;
-                vertical-align: middle;
+                vertical-align: top; /* Alinha os anúncios pelo topo para melhor simetria */
+                padding-top: 10px;
             }
         }
 
@@ -345,7 +352,7 @@
                     <h2>🛸 Aricélio<span>_Drone</span></h2>
                     <p>Imagens aéreas de alta definição para eventos, inspeções técnicas, mapeamento topográfico e produções comerciais exclusivas.</p>
                     <div class="ads-tags">
-                        <span class="tag">📸 4K Ultra HD</span>
+                        <span class="tag">📸 4K HD</span>
                         <span class="tag">📐 Topografia</span>
                         <span class="tag">🎬 Eventos</span>
                     </div>
