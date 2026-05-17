@@ -65,7 +65,7 @@
 
         /* Seção Hero (Principal) */
         .hero {
-            padding: 80px 0 60px 0;
+            padding: 60px 0;
             text-align: center;
             animation: fadeIn 0.8s ease-out;
         }
@@ -89,24 +89,95 @@
             margin: 0 auto 35px auto;
         }
 
-        /* Container do Vídeo Comercial */
-        .video-wrapper {
+        /* CARD DE ANÚNCIO: Aricélio Drone */
+        .ads-banner {
             width: 100%;
             max-width: 760px;
             margin: 0 auto 40px auto;
-            border-radius: 20px;
+            background: linear-gradient(135deg, #1e1e1e 0%, #152523 100%);
+            border: 2px solid #64D2C1;
+            border-radius: 24px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 12px 40px rgba(100, 210, 193, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(100, 210, 193, 0.2);
-            background: #000;
         }
 
-        .video-wrapper video {
-            width: 100%;
-            display: block;
+        .ads-badge {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 9px;
+            color: #64D2C1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
 
-        /* Botões */
+        .ads-content {
+            flex: 1;
+        }
+
+        .ads-content h2 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .ads-content h2 span {
+            color: #64D2C1;
+        }
+
+        .ads-content p {
+            font-size: 14px;
+            color: #ccc;
+            margin: 0 0 15px 0;
+            max-width: 480px;
+            text-align: left;
+        }
+
+        .ads-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .btn-ads {
+            background: #ffffff;
+            color: #121212;
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: 800;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-ads:hover {
+            background: #64D2C1;
+            transform: scale(1.03);
+        }
+
+        /* Botão Principal da Locapp */
         .btn-primary {
             background: #64D2C1;
             color: #121212;
@@ -127,7 +198,7 @@
 
         /* Seção de Recursos / Apps Disponíveis */
         .features {
-            padding: 60px 0;
+            padding: 40px 0;
         }
 
         .section-title {
@@ -194,7 +265,10 @@
             .hero h1 { font-size: 32px; }
             .hero p { font-size: 16px; }
             .section-title { font-size: 24px; }
-            .video-wrapper { border-radius: 12px; margin-bottom: 30px; }
+            .ads-banner { flex-direction: column; text-align: center; padding-top: 40px; }
+            .ads-content p { text-align: center; }
+            .ads-tags { justify-content: center; margin-bottom: 15px; }
+            .btn-ads { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -202,7 +276,7 @@
 
     <header>
         <div class="container nav-wrapper">
-            <a href="#" class="logo">APP<span>LOC</span></a>
+            <a href="#" class="logo">LOC<span>APP</span></a>
         </div>
     </header>
 
@@ -212,12 +286,20 @@
             <h1>Sistemas Inteligentes sob Medida para o seu <span>Negócio</span></h1>
             <p>Alugue aplicações customizadas de alta performance para otimizar os seus recebimentos, gestão e processos internos sem custo de desenvolvimento.</p>
             
-            <div class="video-wrapper">
-    <video controls autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-graphs-31914-large.mp4" type="video/mp4">
-        Seu navegador não suporta a tag de vídeo.
-    </video>
-</div>
+            <div class="ads-banner">
+                <div class="ads-badge">Parceiro</div>
+                <div class="ads-content">
+                    <h2>🛸 Aricélio<span>_Drone</span></h2>
+                    <p>Imagens aéreas de alta definição para eventos, inspeções técnicas, mapeamento topográfico e produções comerciais exclusivas.</p>
+                    <div class="ads-tags">
+                        <span class="tag">📸 4K Ultra HD</span>
+                        <span class="tag">📐 Topografia</span>
+                        <span class="tag">🎬 Eventos</span>
+                    </div>
+                </div>
+                <a href="https://wa.me/5584991339061" target="_blank" class="btn-ads">Fazer Orçamento</a>
+            </div>
+
             <a href="https://wa.me/5584991339061" target="_blank" class="btn-primary">Fale Conosco no WhatsApp</a>
         </section>
 
