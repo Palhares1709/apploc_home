@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locapp - Locação de Aplicativos Customizados</title>
+    <style>
+        /* Estilos Gerais e Temáticos (Dark Mode Premium) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header / Navegação */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(18, 18, 18, 0.8);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #64D2C1;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #ffffff;
+        }
+
+        /* Seção Hero (Principal) */
+        .hero {
+            padding: 80px 0 60px 0;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: #64D2C1;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto 35px auto;
+        }
+
+        /* Botões */
+        .btn-primary {
+            background: #64D2C1;
+            color: #121212;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 14px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            box-shadow: 0 6px 20px rgba(100, 210, 193, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(100, 210, 193, 0.3);
+        }
+
+        /* Seção de Recursos / Apps Disponíveis */
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 40px;
+        }
+
+        .section-title span {
+            color: #64D2C1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #64D2C1;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Rodapé (Footer) */
+        footer {
+            margin-top: 100px;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 11px;
+            color: #555;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        /* Responsividade para Telas Menores */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 16px; }
+            .section-title { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">LOC<span>APP</span></a>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <section class="hero">
+            <h1>Sistemas Inteligentes sob Medida para o seu <span>Negócio</span></h1>
+            <p>Alugue aplicações customizadas de alta performance para otimizar os seus recebimentos, gestão e processos internos sem custo de desenvolvimento.</p>
+            <a href="https://wa.me/5584991339061" target="_blank" class="btn-primary">Fale Conosco no WhatsApp</a>
+        </section>
+
+        <section class="features">
+            <h2 class="section-title">Nossas <span>Soluções</span></h2>
+            <div class="grid">
+                
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Gerador de Cobrança Pix</h3>
+                    <p>Criação rápida de links de pagamento personalizados com QR Code e recurso "Copia e Cola" dinâmico para os seus clientes com tempo de expiração por segurança.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Gestão & Finanças</h3>
+                    <p>Estruturas inteligentes integradas para monitorização de fluxos, relatórios operacionais eficientes e otimização de rotinas administrativas diárias.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Sistemas Sob Demanda</h3>
+                    <p>Precisa de uma ferramenta específica para a sua equipa? Desenvolvemos e alugamos a plataforma exata de acordo com a necessidade da sua empresa.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        POWERED BY PALHARES &copy; 2026. TODOS OS DIREITOS RESERVADOS.
+    </footer>
+
+</body>
+</html>
