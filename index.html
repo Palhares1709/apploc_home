@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Locapp - Locação de Aplicativos Customizados</title>
     <style>
-        /* Estilos Gerais e Temáticos (Dark Mode Premium) */
+        /* ==========================================
+           1. ESTILOS GERAIS (RESET E CONFIGURAÇÃO)
+           Definições base para fontes, margens e cores
+           ========================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,8 +18,8 @@
         }
 
         body {
-            background: #121212;
-            color: #ffffff;
+            background: #121212; /* Fundo grafite escuro premium */
+            color: #ffffff;      /* Texto principal em branco */
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -28,17 +31,20 @@
             padding: 0 20px;
         }
 
-        /* Animações */
+        /* Animação suave ao carregar os elementos da página */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Header / Navegação */
+        /* ==========================================
+           2. TOPO DO SITE (HEADER / NAVEGAÇÃO)
+           Menu fixo que acompanha a rolagem da página
+           ========================================== */
         header {
             padding: 20px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); /* Efeito de vidro borrado */
             position: sticky;
             top: 0;
             z-index: 100;
@@ -54,7 +60,7 @@
         .logo {
             font-size: 24px;
             font-weight: 800;
-            color: #64D2C1;
+            color: #64D2C1; /* Verde-água da marca */
             text-decoration: none;
             letter-spacing: 1px;
         }
@@ -63,14 +69,22 @@
             color: #ffffff;
         }
 
-        /* Seção Hero (Principal) */
-        .hero {
-            padding: 60px 0;
-            text-align: center;
+        /* ==========================================
+           3. ESTRUTURA LADO A LADO (LAYOUT DE COLUNAS)
+           Cria a divisão da tela principal em duas partes
+           ========================================== */
+        .main-columns {
+            display: block; /* Padrão block */
+            margin-top: 60px;
             animation: fadeIn 0.8s ease-out;
         }
 
-        .hero h1 {
+        /* Coluna Esquerda: Apresentação da Locapp */
+        .column-left {
+            margin-bottom: 50px;
+        }
+
+        .column-left h1 {
             font-size: 42px;
             font-weight: 800;
             line-height: 1.2;
@@ -78,36 +92,43 @@
             letter-spacing: -1px;
         }
 
-        .hero h1 span {
+        .column-left h1 span {
             color: #64D2C1;
         }
 
-        .hero p {
+        .column-left p {
             font-size: 18px;
             color: #aaa;
-            max-width: 600px;
-            margin: 0 auto 35px auto;
+            margin-bottom: 35px;
         }
 
-        /* CARD DE ANÚNCIO: Aricélio Drone */
-        .ads-banner {
-            width: 100%;
-            max-width: 760px;
-            margin: 0 auto 40px auto;
-            background: linear-gradient(135deg, #1e1e1e 0%, #152523 100%);
-            border: 2px solid #64D2C1;
-            border-radius: 24px;
-            padding: 30px;
-            text-align: left;
-            box-shadow: 0 12px 40px rgba(100, 210, 193, 0.1);
+        /* Coluna Direita: Seção de Anúncios Dinâmicos */
+        .column-right {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
+            flex-direction: column;
+            gap: 25px; /* Espaço entre um anúncio e outro */
+        }
+
+        /* ==========================================
+           4. DESIGN DOS CARDS DE ANÚNCIO (ADS BOX)
+           Estilo visual premium para os blocos de propaganda
+           ========================================== */
+        .ads-card {
+            background: linear-gradient(135deg, #1e1e1e 0%, #152523 100%);
+            border: 2px solid #64D2C1; /* Borda chamativa na cor do site */
+            border-radius: 24px;
+            padding: 25px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 12px 40px rgba(100, 210, 193, 0.08);
+            transition: transform 0.3s;
         }
 
+        .ads-card:hover {
+            transform: translateY(-4px); /* Sobe de leve ao passar o mouse */
+        }
+
+        /* Etiqueta de identificação de anúncio */
         .ads-badge {
             position: absolute;
             top: 12px;
@@ -122,61 +143,44 @@
             font-weight: 700;
         }
 
-        .ads-content {
-            flex: 1;
-        }
-
-        .ads-content h2 {
-            font-size: 24px;
+        .ads-card h2 {
+            font-size: 22px;
             color: #ffffff;
             margin-bottom: 8px;
             font-weight: 800;
         }
 
-        .ads-content h2 span {
+        .ads-card h2 span {
             color: #64D2C1;
         }
 
-        .ads-content p {
+        .ads-card p {
             font-size: 14px;
             color: #ccc;
-            margin: 0 0 15px 0;
-            max-width: 480px;
-            text-align: left;
+            margin-bottom: 15px;
         }
 
+        /* Tags de sub-serviços do anúncio */
         .ads-tags {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .tag {
             background: rgba(255, 255, 255, 0.05);
-            color: #888;
+            color: #999;
             padding: 4px 10px;
             border-radius: 8px;
             font-size: 11px;
             font-weight: 600;
         }
 
-        .btn-ads {
-            background: #ffffff;
-            color: #121212;
-            padding: 14px 24px;
-            font-size: 14px;
-            font-weight: 800;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-
-        .btn-ads:hover {
-            background: #64D2C1;
-            transform: scale(1.03);
-        }
-
+        /* ==========================================
+           5. BOTÕES DE AÇÃO
+           Configuração dos links de clique para o WhatsApp
+           ========================================== */
         /* Botão Principal da Locapp */
         .btn-primary {
             background: #64D2C1;
@@ -196,9 +200,30 @@
             box-shadow: 0 8px 25px rgba(100, 210, 193, 0.3);
         }
 
-        /* Seção de Recursos / Apps Disponíveis */
+        /* Botão interno dos cards de anúncio */
+        .btn-ads {
+            background: #ffffff;
+            color: #121212;
+            padding: 12px 20px;
+            font-size: 13px;
+            font-weight: 800;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .btn-ads:hover {
+            background: #64D2C1;
+        }
+
+        /* ==========================================
+           6. SEÇÃO DE RECURSOS / PRODUTOS (CARDS INFERIORES)
+           Lista de soluções padrão em grade de 3 colunas
+           ========================================== */
         .features {
-            padding: 40px 0;
+            padding: 80px 0 40px 0;
         }
 
         .section-title {
@@ -248,9 +273,11 @@
             font-size: 14px;
         }
 
-        /* Rodapé (Footer) */
+        /* ==========================================
+           7. ASSINATURA E RODAPÉ (FOOTER)
+           ========================================== */
         footer {
-            margin-top: 100px;
+            margin-top: 80px;
             padding: 40px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             text-align: center;
@@ -260,15 +287,36 @@
             font-weight: 700;
         }
 
-        /* Responsividade para Telas Menores */
+        /* ==========================================
+           8. RESPONSIVIDADE (MEDIA QUERIES)
+           Ajusta o layout lado a lado para computadores
+           ========================================== */
+        @media (min-width: 992px) {
+            /* Ativa as colunas paralelas apenas em computadores/telas grandes */
+            .main-columns {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+            .column-left {
+                display: table-cell;
+                width: 55%;
+                vertical-align: middle;
+                padding-right: 60px;
+                margin-bottom: 0;
+                text-align: left;
+            }
+            .column-right {
+                display: table-cell;
+                width: 45%;
+                vertical-align: middle;
+            }
+        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
-            .hero p { font-size: 16px; }
+            .column-left h1 { font-size: 32px; }
+            .column-left p { font-size: 16px; }
             .section-title { font-size: 24px; }
-            .ads-banner { flex-direction: column; text-align: center; padding-top: 40px; }
-            .ads-content p { text-align: center; }
-            .ads-tags { justify-content: center; margin-bottom: 15px; }
-            .btn-ads { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -282,13 +330,18 @@
 
     <main class="container">
         
-        <section class="hero">
-            <h1>Sistemas Inteligentes sob Medida para o seu <span>Negócio</span></h1>
-            <p>Alugue aplicações customizadas de alta performance para otimizar os seus recebimentos, gestão e processos internos sem custo de desenvolvimento.</p>
+        <div class="main-columns">
             
-            <div class="ads-banner">
-                <div class="ads-badge">Parceiro</div>
-                <div class="ads-content">
+            <div class="column-left">
+                <h1>Sistemas Inteligentes sob Medida para o seu <span>Negócio</span></h1>
+                <p>Alugue aplicações customizadas de alta performance para otimizar os seus recebimentos, gestão e processos internos sem custo de desenvolvimento.</p>
+                <a href="https://wa.me/5584991339061" target="_blank" class="btn-primary">Fale Conosco no WhatsApp</a>
+            </div>
+
+            <div class="column-right">
+                
+                <div class="ads-card">
+                    <div class="ads-badge">Parceiro</div>
                     <h2>🛸 Aricélio<span>_Drone</span></h2>
                     <p>Imagens aéreas de alta definição para eventos, inspeções técnicas, mapeamento topográfico e produções comerciais exclusivas.</p>
                     <div class="ads-tags">
@@ -296,12 +349,12 @@
                         <span class="tag">📐 Topografia</span>
                         <span class="tag">🎬 Eventos</span>
                     </div>
+                    <a href="https://wa.me/5584991339061" target="_blank" class="btn-ads">Fazer Orçamento</a>
                 </div>
-                <a href="https://wa.me/5584991339061" target="_blank" class="btn-ads">Fazer Orçamento</a>
-            </div>
 
-            <a href="https://wa.me/5584991339061" target="_blank" class="btn-primary">Fale Conosco no WhatsApp</a>
-        </section>
+                </div>
+            
+        </div>
 
         <section class="features">
             <h2 class="section-title">Nossas <span>Soluções</span></h2>
