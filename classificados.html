@@ -66,7 +66,7 @@
         <input type="text" id="priceInput" inputmode="decimal" placeholder="Preço R$ 0,00" oninput="formatarMoeda(this)">
         <input type="text" id="phoneInput" inputmode="tel" placeholder="WhatsApp com DDD (Ex: 84991339061)">
         <input type="text" id="imgInput" placeholder="Link da Foto (URL da imagem)">
-        <textarea id="descInput" rows="3" placeholder="Descrição curta do produto..."></textarea>
+        <textarea id="descInput" rows="3" placeholder="Descrição corta do produto..."></textarea>
         
         <button class="btn-action" onclick="saveProduct()">Publicar Anúncio</button>
     </div>
@@ -75,12 +75,10 @@
 </div>
 
 <script>
-    // Inicialização do sistema
     document.addEventListener("DOMContentLoaded", () => {
         renderProducts();
     });
 
-    // Máscara de Moeda idêntica à que usamos com sucesso no Pix
     function formatarMoeda(campo) {
         let valor = campo.value.replace(/\D/g, ""); 
         if (valor === "") { campo.value = ""; return; }
@@ -88,7 +86,6 @@
         campo.value = valor.replace(".", ","); 
     }
 
-    // Exibe ou oculta o formulário de cadastro e os botões de apagar
     function toggleAdminPanel() {
         const panel = document.getElementById('adminPanel');
         const deleteButtons = document.querySelectorAll('.btn-delete');
@@ -102,25 +99,23 @@
         }
     }
 
-    // Salva o produto inserido no localStorage do navegador
     function saveProduct() {
         const owner = document.getElementById('ownerInput').value.trim();
         const title = document.getElementById('titleInput').value.trim();
         const priceRaw = document.getElementById('priceInput').value.trim();
-        const phone = document.getElementById('phoneInput').value.replace(/\D/g, ""); // Remove espaços e parênteses do Zap
+        const phone = document.getElementById('phoneInput').value.replace(/\D/g, ""); 
         const img = document.getElementById('imgInput').value.trim();
         const desc = document.getElementById('descInput').value.trim();
 
         if (!owner || !title || !priceRaw || !phone || !desc) {
-            alert("Por favor, preencha todos os campos obrigatórios (Vendedor, Produto, Preço, WhatsApp e Descrição).");
+            alert("Por favor, preencha todos os campos obrigatórios.");
             return;
         }
 
-        // Se não colocar foto, define uma imagem padrão escura profissional
         const finalImg = img || "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500";
 
         const newProduct = {
-            id: Date.now(), // Gera um ID único baseado no tempo
+            id: Date.now(), 
             owner,
             title,
             price: priceRaw,
@@ -130,10 +125,9 @@
         };
 
         let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
-        products.unshift(newProduct); // Adiciona no início da lista
+        products.unshift(newProduct); 
         localStorage.setItem('locapp_marketplace', JSON.stringify(products));
 
-        // Limpa o formulário após salvar
         document.getElementById('ownerInput').value = "";
         document.getElementById('titleInput').value = "";
         document.getElementById('priceInput').value = "";
@@ -141,11 +135,10 @@
         document.getElementById('imgInput').value = "";
         document.getElementById('descInput').value = "";
 
-        toggleAdminPanel(); // Fecha o painel
-        renderProducts();   // Recarrega a vitrine
+        toggleAdminPanel(); 
+        renderProducts();   
     }
 
-    // Renderiza a lista de produtos na tela
     function renderProducts() {
         const container = document.getElementById('productsContainer');
         let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
@@ -157,20 +150,16 @@
 
         container.innerHTML = "";
         products.forEach(product => {
-            // Prepara o texto correto que vai pro WhatsApp do vendedor
             const msgZap = encodeURIComponent(`Olá ${product.owner}! Vi seu anúncio do "${product.title}" por R$ ${product.price} na Locapp e fiquei interessado. Ainda está disponível?`);
             const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
 
             container.innerHTML += `
                 <div class="product-card">
                     <button class="btn-delete" onclick="deleteProduct(${product.id})">X</button>
-                    
                     <img src="${product.img}" class="product-img" alt="${product.title}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">
-                    
                     <div class="product-owner">Anunciante: ${product.owner}</div>
                     <div class="product-title">${product.title}</div>
-                    <p class="classific-desc product-desc">${product.desc}</p>
-                    
+                    <p class="product-desc">${product.desc}</p>
                     <div class="product-footer">
                         <div class="product-price">R$ ${product.price}</div>
                         <a href="${linkWhatsapp}" target="_blank" class="btn-whatsapp">
@@ -182,7 +171,6 @@
         });
     }
 
-    // Deleta um anúncio específico
     function deleteProduct(id) {
         if (confirm("Tem certeza que deseja remover este anúncio permanentemente?")) {
             let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
@@ -190,7 +178,6 @@
             localStorage.setItem('locapp_marketplace', JSON.stringify(products));
             renderProducts();
             
-            // Mantém os botões de apagar visíveis na atualização do painel aberto
             const deleteButtons = document.querySelectorAll('.btn-delete');
             deleteButtons.forEach(btn => btn.style.display = 'flex');
         }
