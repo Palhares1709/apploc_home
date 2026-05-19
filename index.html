@@ -78,15 +78,17 @@
         .btn-nav:hover { background: #64D2C1; color: #121212; }
 
         /* ==========================================
-           3. ESTRUTURA LADO A LADO (LAYOUT DE COLUNAS)
+           3. ESTRUTURA LADO A LADO (LAYOUT COM FLEXBOX)
            ========================================== */
         .main-columns {
-            display: block;
+            display: flex;
+            flex-direction: column;
             margin-top: 40px;
+            gap: 40px;
             animation: fadeIn 0.8s ease-out;
         }
 
-        .column-left { margin-bottom: 40px; }
+        .column-left { width: 100%; }
 
         .column-left h1 {
             font-size: 42px;
@@ -105,6 +107,7 @@
         }
 
         .column-right {
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -150,8 +153,6 @@
             font-weight: 800;
             padding-right: 60px;
         }
-
-        .ads-card h2 span { color: #64D2C1; }
 
         .ads-card p {
             font-size: 13px;
@@ -248,12 +249,29 @@
         }
 
         /* ==========================================
-           8. RESPONSIVIDADE
+           8. TELA DE MANUTENÇÃO INTERATIVA
+           ========================================== */
+        #maintenanceOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        #maintenanceOverlay .icon { font-size: 60px; margin-bottom: 15px; animation: pulse 2s infinite; }
+        #maintenanceOverlay h2 { color: #64D2C1; font-size: 32px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        #maintenanceOverlay p { color: #aaa; font-size: 16px; max-width: 450px; line-height: 1.5; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* ==========================================
+           9. RESPONSIVIDADE
            ========================================== */
         @media (min-width: 992px) {
-            .main-columns { display: table; width: 100%; table-layout: fixed; }
-            .column-left { display: table-cell; width: 65%; vertical-align: middle; padding-right: 50px; margin-bottom: 0; text-align: left; }
-            .column-right { display: table-cell; width: 35%; vertical-align: top; padding-top: 10px; }
+            .main-columns {
+                flex-direction: row;
+                align-items: center;
+            }
+            .column-left {
+                width: 65%;
+                padding-right: 50px;
+            }
+            .column-right {
+                width: 35%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -265,6 +283,15 @@
 </head>
 <body>
 
+<!-- Tela de Manutenção Geral Locapp -->
+<div id="maintenanceOverlay">
+    <div class="icon">🚀</div>
+    <h2>Locapp em Manutenção</h2>
+    <p>Estamos implementando melhorias e otimizando nossos servidores para lhe oferecer ferramentas ainda mais inteligentes. Voltamos logo!</p>
+</div>
+
+<!-- Conteúdo Estrutural Principal -->
+<div id="mainContent">
     <header>
         <div class="container nav-wrapper">
             <a href="#" class="logo">LOC<span>APP</span></a>
@@ -282,8 +309,7 @@
                 <a href="https://wa.me/5584991339061" target="_blank" class="btn-primary">Fale Conosco no WhatsApp</a>
             </div>
 
-            <div class="column-right" id="mainAdsContainer">
-                </div>
+            <div class="column-right" id="mainAdsContainer"></div>
             
         </div>
 
@@ -317,45 +343,66 @@
     <footer>
         POWERED BY PALHARES &copy; 2026. TODOS OS DIREITOS RESERVADOS.
     </footer>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            carregarAnunciosTrocaTroca();
-        });
+<script>
+    // ==========================================
+    // CONFIGURAÇÃO: ATIVAR/DESATIVAR MANUTENÇÃO DO SITE PRINCIPAL
+    // ==========================================
+    const EM_MANUTENCAO_GERAL = false; // Mude para true para fechar o site principal da Locapp
 
-        function carregarAnunciosTrocaTroca() {
-            const container = document.getElementById('mainAdsContainer');
-            // Busca a mesma lista de produtos guardada no Troca-Troca
-            let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
+    document.addEventListener("DOMContentLoaded", () => {
+        verificarManutencaoGeral();
+        carregarAnunciosTrocaTroca();
+    });
 
-            if (products.length === 0) {
-                // Se não houver nada cadastrado, exibe um aviso discreto
-                container.innerHTML = `<div class="no-ads">Nenhum anúncio de parceiro ativo.</div>`;
-                return;
-            }
-
-            container.innerHTML = "";
-            
-            // Exibe no máximo os 3 anúncios mais recentes para não quebrar o visual da barra lateral
-            const limitados = products.slice(0, 3);
-
-            limitados.forEach(product => {
-                const msgZap = encodeURIComponent(`Olá ${product.owner}! Vi seu anúncio do "${product.title}" por R$ ${product.price} na Locapp e tenho interesse.`);
-                const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
-
-                container.innerHTML += `
-                    <div class="ads-card">
-                        <div class="ads-badge">Parceiro</div>
-                        <h2>${product.title}</h2>
-                        <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${product.owner}</div>
-                        ${product.img ? `<img src="${product.img}" class="ads-card-img" onerror="this.style.display='none'">` : ''}
-                        <p>${product.desc}</p>
-                        <div style="font-size: 15px; font-weight:800; margin-bottom: 10px;">R$ ${product.price}</div>
-                        <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
-                    </div>
-                `;
-            });
+    function verificarManutencaoGeral() {
+        if (EM_MANUTENCAO_GERAL) {
+            document.getElementById('maintenanceOverlay').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
         }
-    </script>
+    }
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, 
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+        );
+    }
+
+    function carregarAnunciosTrocaTroca() {
+        const container = document.getElementById('mainAdsContainer');
+        let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
+
+        if (products.length === 0) {
+            container.innerHTML = `<div class="no-ads">Nenhum anúncio de parceiro ativo.</div>`;
+            return;
+        }
+
+        container.innerHTML = "";
+        const limitados = products.slice(0, 3);
+
+        limitados.forEach(product => {
+            const safeTitle = escapeHTML(product.title);
+            const safeOwner = escapeHTML(product.owner);
+            const safeDesc = escapeHTML(product.desc);
+            const safePrice = escapeHTML(product.price);
+
+            const msgZap = encodeURIComponent(`Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na Locapp e tenho interesse.`);
+            const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
+
+            container.innerHTML += `
+                <div class="ads-card">
+                    <div class="ads-badge">Parceiro</div>
+                    <h2>${safeTitle}</h2>
+                    <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${safeOwner}</div>
+                    ${product.img ? `<img src="${product.img}" class="ads-card-img" alt="${safeTitle}" onerror="this.style.display='none'">` : ''}
+                    <p>${safeDesc}</p>
+                    <div style="font-size: 15px; font-weight:800; margin-bottom: 10px;">R$ ${safePrice}</div>
+                    <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
+                </div>
+            `;
+        });
+    }
+</script>
 </body>
 </html>
