@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Troca-Troca - Locapp</title>
+    <title>Troca-Troca - AppLoc</title>
     <style>
         /* Estilos Base (Padrão Dark Locapp) */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -18,7 +18,7 @@
         /* Grid e Cards de Produtos */
         .products-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; }
         .product-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; position: relative; }
-        .product-img { width: 100%; height: 180px; object-fit: cover; border-radius: 16px; background: #1a1a1a; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.02); }
+        .product-img { width: 100%; height: 180px; object-fit: contain; border-radius: 16px; background: #1a1a1a; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.02); }
         .product-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
         .product-owner { font-size: 11px; color: #64D2C1; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
         .product-desc { font-size: 13px; color: #aaa; line-height: 1.4; margin-bottom: 14px; }
@@ -30,7 +30,7 @@
         .btn-action:active { transform: scale(0.98); }
         .btn-whatsapp { background: #25D366; color: white; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.15); }
         
-        /* Controles do Admin nos Cards (Aparecem ao abrir o Painel) */
+        /* Controles do Admin nos Cards (Ficam estritamente ocultos) */
         .admin-actions { position: absolute; top: 12px; right: 12px; display: none; gap: 8px; z-index: 10; }
         .btn-delete { background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
         .btn-edit { background: rgba(100, 210, 193, 0.2); border: 1px solid rgba(100, 210, 193, 0.4); color: #64D2C1; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
@@ -58,7 +58,6 @@
 </head>
 <body>
 
-<!-- Tela de Manutenção (Aparece se a variável EM_MANUTENCAO for true) -->
 <div id="maintenanceOverlay">
     <div class="icon">⚙️</div>
     <h2>Locapp em Manutenção</h2>
@@ -73,11 +72,11 @@
 
     <div class="products-grid" id="productsContainer"></div>
 
-    <div class="admin-toggle" onclick="toggleAdminPanel()">⚙️ Painel do Administrador</div>
+    <div class="admin-toggle" onclick="verificarAcessoAdmin()">⚙️ Painel do Administrador</div>
 
     <div class="admin-panel" id="adminPanel">
         <h3 id="formTitle">Anunciar Novo Produto</h3>
-        <input type="hidden" id="editIdInput"> <!-- Campo Invisível para guardar o ID na edição -->
+        <input type="hidden" id="editIdInput">
         
         <input type="text" id="ownerInput" placeholder="Nome do Amigo (Vendedor)">
         <input type="text" id="titleInput" placeholder="Título do Produto (Ex: Drone DJI)">
@@ -95,9 +94,12 @@
 
 <script>
     // ==========================================
-    // CONFIGURAÇÃO: ATIVAR/DESATIVAR MANUTENÇÃO
+    // CONFIGURAÇÕES GERAIS DO ADMINISTRADOR
     // ==========================================
-    const EM_MANUTENCAO = false; // Mude para true para ativar a tela de manutenção e travar o site e false para voltar a publicar
+    const EM_MANUTENCAO = false; // true = ativa tela de manutenção
+    const SENHA_ADMIN = "@17101325#";   // 👈 ALTERE AQUI PARA A SUA SENHA DE PREFERÊNCIA
+
+    let isAdminAutenticado = false; // Controle interno de segurança
 
     document.addEventListener("DOMContentLoaded", () => {
         verificarManutencao();
@@ -108,6 +110,25 @@
         if (EM_MANUTENCAO) {
             document.getElementById('maintenanceOverlay').style.display = 'flex';
             document.getElementById('mainContent').style.display = 'none';
+        }
+    }
+
+    // Função que intercepta o clique e pede a senha
+    function verificarAcessoAdmin() {
+        if (isAdminAutenticado) {
+            // Se já digitou a senha antes, apenas fecha/abre normal
+            toggleAdminPanel();
+            return;
+        }
+
+        const tentativaSenha = prompt("Digite a senha do Administrador para acessar as configurações:");
+
+        if (tentativaSenha === SENHA_ADMIN) {
+            isAdminAutenticado = true;
+            alert("Acesso concedido, Palhares!");
+            toggleAdminPanel();
+        } else if (tentativaSenha !== null) {
+            alert("Senha incorreta! Apenas o administrador da Locapp pode realizar essa ação.");
         }
     }
 
@@ -155,6 +176,8 @@
     }
 
     function saveProduct() {
+        if (!isAdminAutenticado) return; // Trava extra de segurança
+
         const editId = document.getElementById('editIdInput').value;
         const owner = document.getElementById('ownerInput').value.trim();
         const title = document.getElementById('titleInput').value.trim();
@@ -172,7 +195,6 @@
         let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
 
         if (editId) {
-            // Modo Edição: Localiza o anúncio pelo ID e atualiza os valores dele
             products = products.map(p => {
                 if (p.id == editId) {
                     return { id: p.id, owner, title, price: priceRaw, phone, img: finalImg, desc };
@@ -181,7 +203,6 @@
             });
             alert("Anúncio atualizado com sucesso!");
         } else {
-            // Modo Criação: Adiciona um novo anúncio no topo da lista
             const newProduct = { id: Date.now(), owner, title, price: priceRaw, phone, img: finalImg, desc };
             products.unshift(newProduct);
             alert("Anúncio publicado com sucesso!");
@@ -212,23 +233,17 @@
             const msgZap = encodeURIComponent(`Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na Locapp e fiquei interessado. Ainda está disponível?`);
             const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
 
-            // Dentro do loop .forEach(product => { ...
+            // Exibe botões administrativos apenas se o painel estiver aberto e autenticado
+            const displayStyle = (isAdminAutenticado && document.getElementById('adminPanel').style.display === 'block') ? 'flex' : 'none';
 
-            // --- ESTE É O TRECHO CORRIGIDO ---
             container.innerHTML += `
-                <div class="ads-card">
-                    <div class="ads-badge">Parceiro</div>
-                    <h2>${safeTitle}</h2>
-                    <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${safeOwner}</div>
-                    ${product.img ? `<img src="${product.img}" alt="${safeTitle}" class="ads-card-img" style="object-fit: contain;" onerror="this.style.display='none'">` : ''}
-                    <p>${safeDesc}</p>
-                    <div style="font-size: 15px; font-weight:800; margin-bottom: 10px;">R$ ${safePrice}</div>
-                    <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
-                </div>
-            `;
-            // --- FIM DO TRECHO CORRIGIDO ---
+                <div class="product-card">
+                    <div class="admin-actions" style="display: ${displayStyle};">
+                        <button class="btn-edit" title="Editar Anúncio" onclick="prepararEdicao(${product.id})">✏️</button>
+                        <button class="btn-delete" title="Excluir Anúncio" onclick="deleteProduct(${product.id})">X</button>
+                    </div>
                     
-                    <img src="${product.img}" class="product-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">
+                    <img src="${product.img}" class="product-img" alt="${safeTitle}" style="object-fit: contain;" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">
                     <div class="product-owner">Anunciante: ${safeOwner}</div>
                     <div class="product-title">${safeTitle}</div>
                     <p class="product-desc">${safeDesc}</p>
@@ -244,11 +259,12 @@
     }
 
     function prepararEdicao(id) {
+        if (!isAdminAutenticado) return;
+
         let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
         const item = products.find(p => p.id === id);
 
         if (item) {
-            // Insere os valores do produto selecionado de volta nos inputs do painel
             document.getElementById('editIdInput').value = item.id;
             document.getElementById('ownerInput').value = item.owner;
             document.getElementById('titleInput').value = item.title;
@@ -257,11 +273,9 @@
             document.getElementById('imgInput').value = item.img;
             document.getElementById('descInput').value = item.desc;
 
-            // Ajusta o cabeçalho e o botão de ação do painel administrativo
             document.getElementById('formTitle').innerText = "Editar Anúncio";
             document.getElementById('btnSubmitForm').innerText = "Salvar Alterações";
 
-            // Abre o painel e move o foco da tela suavemente até ele
             const panel = document.getElementById('adminPanel');
             panel.style.display = 'block';
             panel.scrollIntoView({ behavior: 'smooth' });
@@ -271,14 +285,13 @@
     }
 
     function deleteProduct(id) {
+        if (!isAdminAutenticado) return;
+
         if (confirm("Tem certeza que deseja remover este anúncio permanentemente?")) {
             let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
             products = products.filter(p => p.id !== id);
             localStorage.setItem('locapp_marketplace', JSON.stringify(products));
             renderProducts();
-            
-            // Mantém os botões do gerenciador visíveis na tela
-            document.querySelectorAll('.admin-actions').forEach(box => box.style.display = 'flex');
         }
     }
 </script>
