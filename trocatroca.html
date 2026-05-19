@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Troca-Troca - Locapp</title>
+    <title>Desapega - AppLoc</title>
     <style>
         /* Estilos Base (Padrão Dark Locapp) */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -25,13 +25,17 @@
         .product-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
         .product-price { font-size: 18px; font-weight: 800; color: white; }
         
-        /* Botões */
+        /* Botões de Ação do Card */
         .btn-action { background: #64D2C1; color: #121212; border: none; padding: 16px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 16px; cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none; display: block; }
         .btn-action:active { transform: scale(0.98); }
         .btn-whatsapp { background: #25D366; color: white; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.15); }
-        .btn-delete { position: absolute; top: 12px; right: 12px; background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 10; }
         
-        /* Painel Admin (Ocultável) */
+        /* Controles do Admin nos Cards (Ficam ocultos por padrão) */
+        .admin-actions { position: absolute; top: 12px; right: 12px; display: none; gap: 8px; z-index: 10; }
+        .btn-delete { background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-edit { background: rgba(100, 210, 193, 0.2); border: 1px solid rgba(100, 210, 193, 0.4); color: #64D2C1; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        /* Painel Admin */
         .admin-toggle { text-align: center; margin-top: 30px; font-size: 12px; color: #444; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 10px; }
         .admin-panel { background: #1a1a1a; border: 1px solid rgba(100, 210, 193, 0.2); border-radius: 24px; padding: 20px; margin-top: 15px; display: none; }
         .admin-panel h3 { font-size: 16px; color: #64D2C1; margin-bottom: 15px; text-align: center; }
@@ -40,44 +44,78 @@
         input, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #333; background: #121212; color: white; margin-bottom: 12px; outline: none; font-size: 14px; }
         input:focus, textarea:focus { border-color: #64D2C1; }
         
-        /* Estado Vazio */
+        .img-preview { width: 100%; height: 100px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; display: none; border: 1px dashed #444; }
         .empty-state { text-align: center; padding: 40px 20px; color: #555; font-size: 14px; font-weight: 600; }
-        
         .footer { text-align: center; margin-top: 40px; font-size: 8px; color: #222; letter-spacing: 2px; font-weight: 900; }
+
+        /* Tela de Manutenção Interativa */
+        #maintenanceOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        #maintenanceOverlay .icon { font-size: 50px; margin-bottom: 15px; animation: pulse 2s infinite; }
+        #maintenanceOverlay h2 { color: #64D2C1; font-size: 26px; font-weight: 800; margin-bottom: 10px; }
+        #maintenanceOverlay p { color: #aaa; font-size: 14px; max-width: 300px; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
-<div class="container">
+<!-- Tela de Manutenção -->
+<div id="maintenanceOverlay">
+    <div class="icon">⚙️</div>
+    <h2>Locapp em Manutenção</h2>
+    <p>Estamos atualizando nossa estrutura para te entregar uma experiência melhor. Voltamos em instantes!</p>
+</div>
+
+<div class="container" id="mainContent">
     <header>
         <h1>Troca-Troca Locapp</h1>
         <p>Classificados e desapegos entre amigos</p>
     </header>
 
-    <div class="products-grid" id="productsContainer">
-        </div>
+    <div class="products-grid" id="productsContainer"></div>
 
     <div class="admin-toggle" onclick="toggleAdminPanel()">⚙️ Painel do Administrador</div>
 
     <div class="admin-panel" id="adminPanel">
-        <h3>Anunciar Novo Produto</h3>
+        <h3 id="formTitle">Anunciar Novo Produto</h3>
+        <input type="hidden" id="editIdInput"> <!-- Campo Invisível para guardar o ID na edição -->
+        
         <input type="text" id="ownerInput" placeholder="Nome do Amigo (Vendedor)">
         <input type="text" id="titleInput" placeholder="Título do Produto (Ex: Drone DJI)">
         <input type="text" id="priceInput" inputmode="decimal" placeholder="Preço R$ 0,00" oninput="formatarMoeda(this)">
         <input type="text" id="phoneInput" inputmode="tel" placeholder="WhatsApp com DDD (Ex: 84991339061)">
-        <input type="text" id="imgInput" placeholder="Link da Foto (URL da imagem)">
-        <textarea id="descInput" rows="3" placeholder="Descrição corta do produto..."></textarea>
+        <input type="text" id="imgInput" placeholder="Link da Foto (URL da imagem)" oninput="previewImagem(this)">
+        <img id="panelImgPreview" class="img-preview" alt="Preview">
+        <textarea id="descInput" rows="3" placeholder="Descrição curta do produto..."></textarea>
         
-        <button class="btn-action" onclick="saveProduct()">Publicar Anúncio</button>
+        <button class="btn-action" id="btnSubmitForm" onclick="saveProduct()">Publicar Anúncio</button>
     </div>
 
     <div class="footer">POWERED BY PALHARES</div>
 </div>
 
 <script>
+    // ==========================================
+    // CONFIGURAÇÃO: ATIVAR/DESATIVAR MANUTENÇÃO
+    // ==========================================
+    const EM_MANUTENCAO = false; // Mude para true para ativar a tela de manutenção
+
     document.addEventListener("DOMContentLoaded", () => {
+        verificarManutencao();
         renderProducts();
     });
+
+    function verificarManutencao() {
+        if (EM_MANUTENCAO) {
+            document.getElementById('maintenanceOverlay').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+        }
+    }
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, 
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+        );
+    }
 
     function formatarMoeda(campo) {
         let valor = campo.value.replace(/\D/g, ""); 
@@ -86,20 +124,38 @@
         campo.value = valor.replace(".", ","); 
     }
 
-    function toggleAdminPanel() {
-        const panel = document.getElementById('adminPanel');
-        const deleteButtons = document.querySelectorAll('.btn-delete');
-        
-        if (panel.style.display === 'block') {
-            panel.style.display = 'none';
-            deleteButtons.forEach(btn => btn.style.display = 'none');
+    function previewImagem(input) {
+        const preview = document.getElementById('panelImgPreview');
+        if(input.value.trim() !== "") {
+            preview.src = input.value.trim();
+            preview.style.display = 'block';
         } else {
-            panel.style.display = 'block';
-            deleteButtons.forEach(btn => btn.style.display = 'flex');
+            preview.style.display = 'none';
         }
     }
 
+    function toggleAdminPanel() {
+        const panel = document.getElementById('adminPanel');
+        const adminActions = document.querySelectorAll('.admin-actions');
+        const isHidden = (panel.style.display === 'none' || panel.style.display === '');
+        
+        panel.style.display = isHidden ? 'block' : 'none';
+        adminActions.forEach(box => box.style.display = isHidden ? 'flex' : 'none');
+
+        if (!isHidden) { resetarFormulario(); }
+    }
+
+    function resetarFormulario() {
+        ['ownerInput', 'titleInput', 'priceInput', 'phoneInput', 'imgInput', 'descInput', 'editIdInput'].forEach(id => {
+            document.getElementById(id).value = "";
+        });
+        document.getElementById('panelImgPreview').style.display = 'none';
+        document.getElementById('formTitle').innerText = "Anunciar Novo Produto";
+        document.getElementById('btnSubmitForm').innerText = "Publicar Anúncio";
+    }
+
     function saveProduct() {
+        const editId = document.getElementById('editIdInput').value;
         const owner = document.getElementById('ownerInput').value.trim();
         const title = document.getElementById('titleInput').value.trim();
         const priceRaw = document.getElementById('priceInput').value.trim();
@@ -113,28 +169,26 @@
         }
 
         const finalImg = img || "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500";
-
-        const newProduct = {
-            id: Date.now(), 
-            owner,
-            title,
-            price: priceRaw,
-            phone,
-            img: finalImg,
-            desc
-        };
-
         let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
-        products.unshift(newProduct); 
+
+        if (editId) {
+            // Modo Edição: Atualiza o item existente baseado no ID
+            products = products.map(p => {
+                if (p.id == editId) {
+                    return { id: p.id, owner, title, price: priceRaw, phone, img: finalImg, desc };
+                }
+                return p;
+            });
+            alert("Anúncio atualizado com sucesso!");
+        } else {
+            // Modo Criação: Cria um anúncio novo
+            const newProduct = { id: Date.now(), owner, title, price: priceRaw, phone, img: finalImg, desc };
+            products.unshift(newProduct);
+            alert("Anúncio publicado!");
+        }
+
         localStorage.setItem('locapp_marketplace', JSON.stringify(products));
-
-        document.getElementById('ownerInput').value = "";
-        document.getElementById('titleInput').value = "";
-        document.getElementById('priceInput').value = "";
-        document.getElementById('phoneInput').value = "";
-        document.getElementById('imgInput').value = "";
-        document.getElementById('descInput').value = "";
-
+        resetarFormulario();
         toggleAdminPanel(); 
         renderProducts();   
     }
@@ -150,18 +204,28 @@
 
         container.innerHTML = "";
         products.forEach(product => {
-            const msgZap = encodeURIComponent(`Olá ${product.owner}! Vi seu anúncio do "${product.title}" por R$ ${product.price} na Locapp e fiquei interessado. Ainda está disponível?`);
+            const safeTitle = escapeHTML(product.title);
+            const safeOwner = escapeHTML(product.owner);
+            const safeDesc = escapeHTML(product.desc);
+            const safePrice = escapeHTML(product.price);
+
+            const msgZap = encodeURIComponent(`Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na Locapp e fiquei interessado. Ainda está disponível?`);
             const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
 
             container.innerHTML += `
                 <div class="product-card">
-                    <button class="btn-delete" onclick="deleteProduct(${product.id})">X</button>
-                    <img src="${product.img}" class="product-img" alt="${product.title}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">
-                    <div class="product-owner">Anunciante: ${product.owner}</div>
-                    <div class="product-title">${product.title}</div>
-                    <p class="product-desc">${product.desc}</p>
+                    <!-- Caixa de Ações Administrativas (Excluir e Editar) -->
+                    <div class="admin-actions">
+                        <button class="btn-edit" title="Editar Anúncio" onclick="prepararEdicao(${product.id})">✏️</button>
+                        <button class="btn-delete" title="Excluir Anúncio" onclick="deleteProduct(${product.id})">X</button>
+                    </div>
+                    
+                    <img src="${product.img}" class="product-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">
+                    <div class="product-owner">Anunciante: ${safeOwner}</div>
+                    <div class="product-title">${safeTitle}</div>
+                    <p class="product-desc">${safeDesc}</p>
                     <div class="product-footer">
-                        <div class="product-price">R$ ${product.price}</div>
+                        <div class="product-price">R$ ${safePrice}</div>
                         <a href="${linkWhatsapp}" target="_blank" class="btn-whatsapp">
                             💬 Tenho Interesse
                         </a>
@@ -171,6 +235,34 @@
         });
     }
 
+    function prepararEdicao(id) {
+        let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
+        const item = products.find(p => p.id === id);
+
+        if (item) {
+            // Preenche o formulário com os dados antigos
+            document.getElementById('editIdInput').value = item.id;
+            document.getElementById('ownerInput').value = item.owner;
+            document.getElementById('titleInput').value = item.title;
+            document.getElementById('priceInput').value = item.price;
+            document.getElementById('phoneInput').value = item.phone;
+            document.getElementById('imgInput').value = item.img;
+            document.getElementById('descInput').value = item.desc;
+
+            // Altera textos do formulário para o modo de edição
+            document.getElementById('formTitle').innerText = "Editar Anúncio";
+            document.getElementById('btnSubmitForm').innerText = "Salvar Alterações";
+
+            // Abre e foca o painel
+            const panel = document.getElementById('adminPanel');
+            panel.style.display = 'block';
+            panel.scrollIntoView({ behavior: 'smooth' });
+            
+            // Ativa o preview da imagem caso ela exista
+            previewImagem(document.getElementById('imgInput'));
+        }
+    }
+
     function deleteProduct(id) {
         if (confirm("Tem certeza que deseja remover este anúncio permanentemente?")) {
             let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
@@ -178,8 +270,7 @@
             localStorage.setItem('locapp_marketplace', JSON.stringify(products));
             renderProducts();
             
-            const deleteButtons = document.querySelectorAll('.btn-delete');
-            deleteButtons.forEach(btn => btn.style.display = 'flex');
+            document.querySelectorAll('.admin-actions').forEach(box => box.style.display = 'flex');
         }
     }
 </script>
