@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Desapega - AppLoc</title>
+    <title>Troca-Troca - Locapp</title>
     <style>
         /* Estilos Base (Padrão Dark Locapp) */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -32,8 +32,8 @@
         
         /* Controles do Admin nos Cards (Ficam ocultos por padrão) */
         .admin-actions { position: absolute; top: 12px; right: 12px; display: none; gap: 8px; z-index: 10; }
-        .btn-delete { background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; }
-        .btn-edit { background: rgba(100, 210, 193, 0.2); border: 1px solid rgba(100, 210, 193, 0.4); color: #64D2C1; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .btn-delete { background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
+        .btn-edit { background: rgba(100, 210, 193, 0.2); border: 1px solid rgba(100, 210, 193, 0.4); color: #64D2C1; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
 
         /* Painel Admin */
         .admin-toggle { text-align: center; margin-top: 30px; font-size: 12px; color: #444; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 10px; }
@@ -97,7 +97,7 @@
     // ==========================================
     // CONFIGURAÇÃO: ATIVAR/DESATIVAR MANUTENÇÃO
     // ==========================================
-    const EM_MANUTENCAO = false; // Mude para true para ativar a tela de manutenção
+    const EM_MANUTENCAO = false; // Mude para true para ativar a tela de manutenção e travar o site
 
     document.addEventListener("DOMContentLoaded", () => {
         verificarManutencao();
@@ -172,7 +172,7 @@
         let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
 
         if (editId) {
-            // Modo Edição: Atualiza o item existente baseado no ID
+            // Modo Edição: Localiza o anúncio pelo ID e atualiza os valores dele
             products = products.map(p => {
                 if (p.id == editId) {
                     return { id: p.id, owner, title, price: priceRaw, phone, img: finalImg, desc };
@@ -181,10 +181,10 @@
             });
             alert("Anúncio atualizado com sucesso!");
         } else {
-            // Modo Criação: Cria um anúncio novo
+            // Modo Criação: Adiciona um novo anúncio no topo da lista
             const newProduct = { id: Date.now(), owner, title, price: priceRaw, phone, img: finalImg, desc };
             products.unshift(newProduct);
-            alert("Anúncio publicado!");
+            alert("Anúncio publicado com sucesso!");
         }
 
         localStorage.setItem('locapp_marketplace', JSON.stringify(products));
@@ -214,7 +214,7 @@
 
             container.innerHTML += `
                 <div class="product-card">
-                    <!-- Caixa de Ações Administrativas (Excluir e Editar) -->
+                    <!-- Caixa de Ferramentas do Admin (Aparece quando o painel de controle abre) -->
                     <div class="admin-actions">
                         <button class="btn-edit" title="Editar Anúncio" onclick="prepararEdicao(${product.id})">✏️</button>
                         <button class="btn-delete" title="Excluir Anúncio" onclick="deleteProduct(${product.id})">X</button>
@@ -240,7 +240,7 @@
         const item = products.find(p => p.id === id);
 
         if (item) {
-            // Preenche o formulário com os dados antigos
+            // Insere os valores do produto selecionado de volta nos inputs do painel
             document.getElementById('editIdInput').value = item.id;
             document.getElementById('ownerInput').value = item.owner;
             document.getElementById('titleInput').value = item.title;
@@ -249,16 +249,15 @@
             document.getElementById('imgInput').value = item.img;
             document.getElementById('descInput').value = item.desc;
 
-            // Altera textos do formulário para o modo de edição
+            // Ajusta o cabeçalho e o botão de ação do painel administrativo
             document.getElementById('formTitle').innerText = "Editar Anúncio";
             document.getElementById('btnSubmitForm').innerText = "Salvar Alterações";
 
-            // Abre e foca o painel
+            // Abre o painel e move o foco da tela suavemente até ele
             const panel = document.getElementById('adminPanel');
             panel.style.display = 'block';
             panel.scrollIntoView({ behavior: 'smooth' });
             
-            // Ativa o preview da imagem caso ela exista
             previewImagem(document.getElementById('imgInput'));
         }
     }
@@ -270,6 +269,7 @@
             localStorage.setItem('locapp_marketplace', JSON.stringify(products));
             renderProducts();
             
+            // Mantém os botões do gerenciador visíveis
             document.querySelectorAll('.admin-actions').forEach(box => box.style.display = 'flex');
         }
     }
