@@ -30,7 +30,7 @@
         .btn-action:active { transform: scale(0.98); }
         .btn-whatsapp { background: #25D366; color: white; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.15); }
         
-        /* Controles do Admin nos Cards (Ficam ocultos por padrão) */
+        /* Controles do Admin nos Cards (Aparecem ao abrir o Painel) */
         .admin-actions { position: absolute; top: 12px; right: 12px; display: none; gap: 8px; z-index: 10; }
         .btn-delete { background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
         .btn-edit { background: rgba(100, 210, 193, 0.2); border: 1px solid rgba(100, 210, 193, 0.4); color: #64D2C1; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
@@ -58,7 +58,7 @@
 </head>
 <body>
 
-<!-- Tela de Manutenção -->
+<!-- Tela de Manutenção (Aparece se a variável EM_MANUTENCAO for true) -->
 <div id="maintenanceOverlay">
     <div class="icon">⚙️</div>
     <h2>Locapp em Manutenção</h2>
@@ -214,7 +214,7 @@
 
             container.innerHTML += `
                 <div class="product-card">
-                    <!-- Caixa de Ferramentas do Admin (Aparece quando o painel de controle abre) -->
+                    <!-- Caixa de Ferramentas do Admin (Aparece quando o painel abre) -->
                     <div class="admin-actions">
                         <button class="btn-edit" title="Editar Anúncio" onclick="prepararEdicao(${product.id})">✏️</button>
                         <button class="btn-delete" title="Excluir Anúncio" onclick="deleteProduct(${product.id})">X</button>
@@ -269,7 +269,7 @@
             localStorage.setItem('locapp_marketplace', JSON.stringify(products));
             renderProducts();
             
-            // Mantém os botões do gerenciador visíveis
+            // Mantém os botões do gerenciador visíveis na tela
             document.querySelectorAll('.admin-actions').forEach(box => box.style.display = 'flex');
         }
     }
