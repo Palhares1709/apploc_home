@@ -39,7 +39,7 @@
            2. TOPO DO SITE (HEADER / NAVEGAÇÃO)
            ========================================== */
         header {
-            padding: 20px 0;
+            padding: 15px 0; /* Ajustado levemente para acomodar a imagem com elegância */
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             position: sticky;
@@ -54,15 +54,23 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: #64D2C1;
+        /* Estilos ajustados para a nova Logomarca */
+        .logo-link {
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            letter-spacing: 1px;
         }
 
-        .logo span { color: #ffffff; }
+        .logo-img {
+            height: 45px; /* Altura ideal para manter o cabeçalho compacto e legível */
+            width: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.02);
+        }
 
         .btn-nav {
             background: rgba(255, 255, 255, 0.05);
@@ -278,23 +286,24 @@
             .column-left h1 { font-size: 32px; }
             .column-left p { font-size: 16px; }
             .section-title { font-size: 24px; }
+            .logo-img { height: 38px; } /* Reduz ligeiramente a logo em telas menores */
         }
     </style>
 </head>
 <body>
 
-<!-- Tela de Manutenção Geral Locapp -->
 <div id="maintenanceOverlay">
     <div class="icon">🚀</div>
     <h2>AppLoc em Manutenção</h2>
     <p>Estamos implementando melhorias e otimizando nossos servidores para lhe oferecer ferramentas ainda mais inteligentes. Voltamos logo!</p>
 </div>
 
-<!-- Conteúdo Estrutural Principal -->
 <div id="mainContent">
     <header>
         <div class="container nav-wrapper">
-            <a href="#" class="logo">LOC<span>APP</span></a>
+            <a href="#" class="logo-link">
+                <img src="COLE_O_LINK_DA_IMAGEM_AQUI" alt="AppLoc - Anuncie, venda e compre" class="logo-img">
+            </a>
             <a href="trocatroca.html" id="linkTroca" class="btn-nav">Ir para o Troca-Troca ➔</a>
         </div>
     </header>
@@ -349,7 +358,7 @@
     // ==========================================
     // CONFIGURAÇÃO: ATIVAR/DESATIVAR MANUTENÇÃO DO SITE PRINCIPAL
     // ==========================================
-    const EM_MANUTENCAO_GERAL = false; // Mude para true para fechar o site principal da Locapp e true para voltar ao ar
+    const EM_MANUTENCAO_GERAL = false; // Mude para true para fechar o site principal da Locapp e false para voltar ao ar
 
     document.addEventListener("DOMContentLoaded", () => {
         verificarManutencaoGeral();
