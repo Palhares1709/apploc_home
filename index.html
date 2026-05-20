@@ -432,19 +432,30 @@
             // ASSIM DEVE FICAR O BLOCO DENTRO DA FUNÇÃO carregarAnunciosTrocaTroca():
 // Substitua o trecho dentro do forEach pelo bloco abaixo:
 container.innerHTML += `
-    <div class="ads-card">
+    <div class="ads-card" style="display: flex !important; flex-direction: column !important; height: auto !important; padding: 18px !important;">
         <div class="ads-badge">Parceiro</div>
         
         ${product.img ? `<img src="${product.img}" class="ads-card-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">` : ''}
         
-        <h2>${safeTitle}</h2>
-        <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${safeOwner}</div>
-        <p>${safeDesc}</p>
-        <div style="font-size: 15px; font-weight: 800; margin-bottom: 10px;">R$ ${safePrice}</div>
+        <div style="font-size: 18px !important; color: #ffffff !important; font-weight: 800 !important; margin-top: 12px !important; margin-bottom: 4px !important; display: block !important;">
+            ${safeTitle}
+        </div>
         
-        <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
+        <div style="font-size: 10px !important; color: #64D2C1 !important; margin-bottom: 8px !important; text-transform: uppercase !important; font-weight: 700 !important; display: block !important;">
+            Por: ${safeOwner}
+        </div>
+        
+        <div style="font-size: 13px !important; color: #b3b3b3 !important; margin-bottom: 12px !important; line-height: 1.4 !important; display: block !important;">
+            ${safeDesc}
+        </div>
+        
+        <div style="font-size: 16px !important; font-weight: 800 !important; color: #ffffff !important; margin-bottom: 12px !important; display: block !important;">
+            R$ ${safePrice}
+        </div>
+        
+        <a href="${linkWhatsapp}" target="_blank" class="btn-ads" style="display: block !important;">Fazer Orçamento / Comprar</a>
     </div>
-`;        });
+`;});
     }
 </script>
 </body>
