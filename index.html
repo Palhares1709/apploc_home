@@ -273,25 +273,44 @@
         @media (min-width: 992px) {
     .main-columns {
         flex-direction: row;
-        align-items: flex-start; /* Alinha o card pelo topo da seção */
-        justify-content: space-between; /* Empurra as duas colunas para os cantos */
+        align-items: flex-start; /* Mantém o alinhamento pelo topo */
+        justify-content: space-between;
+        gap: 50px; /* Espaçamento fixo ideal entre as duas colunas */
     }
+
     .column-left {
-        width: 60%; /* Ajustado levemente para dar mais espaço */
-        padding-right: 50px;
+        width: 55%; /* Ajustado para equilibrar o texto */
+        position: sticky; /* 🚀 MÁGICA: O texto vai fixar na tela enquanto o usuário rola os anúncios */
+        top: 100px; /* Distância do topo do site para não grudar no cabeçalho */
     }
+
     .column-right {
-        width: 35%;
+        width: 40%;
         display: flex;
         flex-direction: column;
-        align-items: flex-end; /* Força os cards a irem para o canto direito */
+        gap: 15px;
+        align-items: flex-end;
+        
+        /* 💡 OPCIONAL: Caso queira limitar o tamanho vertical da lista de anúncios */
+        max-height: 75vh; /* Limita a altura a 75% da tela do usuário */
+        overflow-y: auto; /* Cria uma rolagem suave só nos anúncios se houver muitos */
+        padding-right: 5px; /* Espaço para a barra de rolagem não colar no card */
     }
+
+    /* Remove ou personaliza a barra de rolagem lateral dos anúncios para ficar invisível/discreta */
+    .column-right::-webkit-scrollbar {
+        width: 4px;
+    }
+    .column-right::-webkit-scrollbar-thumb {
+        background: rgba(100, 210, 193, 0.3);
+        border-radius: 4px;
+    }
+
     .ads-card {
-        width: 100%; /* O card preenche a coluna que já está na direita */
-        max-width: 340px; /* Define um tamanho máximo ideal para o card não esticar demais */
+        width: 100%;
+        max-width: 340px;
     }
 }
-
         @media (max-width: 768px) {
             .column-left h1 { font-size: 32px; }
             .column-left p { font-size: 16px; }
