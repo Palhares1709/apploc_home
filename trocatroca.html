@@ -18,7 +18,15 @@
         /* Grid e Cards de Produtos */
         .products-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; }
         .product-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; position: relative; }
-        .product-img { width: 100%; height: 180px; object-fit: contain; border-radius: 16px; background: #1a1a1a; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.02); }
+        .product-img {
+    width: 100%;
+    height: 200px; /* Um pouco maior no mobile para dar um visual premium */
+    object-fit: cover; /* 🚀 MÁGICA: Preenche totalmente o card */
+    object-position: center;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
         .product-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
         .product-owner { font-size: 11px; color: #64D2C1; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
         .product-desc { font-size: 13px; color: #aaa; line-height: 1.4; margin-bottom: 14px; }
