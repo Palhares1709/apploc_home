@@ -171,10 +171,11 @@
 
        .ads-card-img {
     width: 100%;
-    height: 180px; /* 🚀 Iguala a altura do Troca-Troca para o card ter o mesmo tamanho */
-    object-fit: contain; /* 💡 Garante que o desenho apareça INTEIRO (com a mesa e os personagens) */
-    background: #1a1a1a; /* Fundo escuro idêntico ao do Troca-Troca */
-    border-radius: 16px; /* Bordas arredondadas iguais */
+    height: 180px; /* 🚀 Mesma altura do Troca-Troca */
+    object-fit: cover; /* 🚀 Faz a imagem esticar e preencher as laterais como no Troca-Troca */
+    object-position: center; /* Mantém o meio do desenho focado */
+    background: #1a1a1a;
+    border-radius: 16px; /* Bordas arredondadas e bonitas */
     margin-bottom: 12px;
     border: 1px solid rgba(255, 255, 255, 0.02);
     display: block;
