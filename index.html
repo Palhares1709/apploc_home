@@ -427,17 +427,20 @@
             const msgZap = encodeURIComponent(`Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na Locapp e tenho interesse.`);
             const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
 
-            container.innerHTML += `
-                <div class="ads-card">
-                    <div class="ads-badge">Parceiro</div>
-                    <h2>${safeTitle}</h2>
-                    <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${safeOwner}</div>
-                   ${product.img ? `<img src="${product.img}" class="ads-card-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">` : ''}
-                    <p>${safeDesc}</p>
-                    <div style="font-size: 15px; font-weight:800; margin-bottom: 10px;">R$ ${safePrice}</div>
-                    <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
-                </div>
-            `;
+            // ASSIM DEVE FICAR O BLOCO DENTRO DA FUNÇÃO carregarAnunciosTrocaTroca():
+container.innerHTML += `
+    <div class="ads-card">
+        <div class="ads-badge">Parceiro</div>
+        
+        ${product.img ? `<img src="${product.img}" class="ads-card-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">` : ''}
+        
+        <h2>${safeTitle}</h2>
+        <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${safeOwner}</div>
+        <p>${safeDesc}</p>
+        <div style="font-size: 15px; font-weight:800; margin-bottom: 10px;">R$ ${safePrice}</div>
+        <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
+    </div>
+`;
         });
     }
 </script>
