@@ -429,6 +429,7 @@
             const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
 
             // ASSIM DEVE FICAR O BLOCO DENTRO DA FUNÇÃO carregarAnunciosTrocaTroca():
+// Substitua o trecho dentro do forEach pelo bloco abaixo:
 container.innerHTML += `
     <div class="ads-card">
         <div class="ads-badge">Parceiro</div>
@@ -438,11 +439,11 @@ container.innerHTML += `
         <h2>${safeTitle}</h2>
         <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase;">Por: ${safeOwner}</div>
         <p>${safeDesc}</p>
-        <div style="font-size: 15px; font-weight:800; margin-bottom: 10px;">R$ ${safePrice}</div>
+        <div style="font-size: 15px; font-weight: 800; margin-bottom: 10px;">R$ ${safePrice}</div>
+        
         <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
     </div>
-`;
-        });
+`;        });
     }
 </script>
 </body>
