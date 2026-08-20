@@ -26,7 +26,7 @@ document.getElementById("formContato").addEventListener("submit", function(e){
 
     let texto = `Olá, me chamo ${nome}. Gostaria de saber mais sobre os sistemas da AppLoc. ${msg}`;
 
-    let url = `https://wa.me/5584999999999?text=${encodeURIComponent(texto)}`;
+    let url = `https://wa.me/5584991339061?text=${encodeURIComponent(texto)}`;
 
     window.open(url, "_blank");
 });
