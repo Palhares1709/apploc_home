@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppLoc | Sistemas sob medida</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AppLoc | Sistemas sob medida</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header>
+<header id="header">
     <div class="container nav">
         <div class="logo">AppLoc</div>
 
@@ -28,14 +28,17 @@
         <h1>Sistemas inteligentes para escalar seu <span>negócio</span></h1>
 
         <p>
-            Automatize processos, aumente seus resultados e tenha controle total
-            da sua operação com soluções sob medida.
+            Automatize processos, aumente seus resultados e tenha controle total da sua operação.
         </p>
 
-        <a href="#" class="btn">Solicitar demonstração</a>
+        <div class="buttons">
+            <!-- ⚠️ TROQUE PELO SEU NÚMERO -->
+            <a href="https://wa.me/5599999999999" target="_blank" class="btn">Falar no WhatsApp</a>
+            <a href="#contato" class="btn-outline">Solicitar proposta</a>
+        </div>
 
         <div class="trust">
-            +50 empresas atendidas • soluções em produção • suporte contínuo
+            +50 empresas atendidas • soluções ativas • suporte contínuo
         </div>
     </div>
 </section>
@@ -48,21 +51,29 @@
         <div class="grid">
 
             <div class="card reveal">
-                <h3>Controle Financeiro</h3>
-                <p>Gerencie receitas, despesas e tenha visão completa do seu negócio.</p>
+                <h3>Financeiro Completo</h3>
+                <p>Controle total de entradas, saídas e fluxo de caixa.</p>
             </div>
 
             <div class="card reveal">
-                <h3>Automação de Processos</h3>
-                <p>Reduza trabalho manual e aumente sua produtividade.</p>
+                <h3>Automação</h3>
+                <p>Elimine tarefas repetitivas e ganhe produtividade.</p>
             </div>
 
             <div class="card reveal">
-                <h3>Relatórios Inteligentes</h3>
-                <p>Tome decisões com base em dados reais e atualizados.</p>
+                <h3>Relatórios</h3>
+                <p>Decisões baseadas em dados em tempo real.</p>
             </div>
 
         </div>
+    </div>
+</section>
+
+<section class="depoimento">
+    <div class="container center">
+        <p class="quote">
+            "Depois da AppLoc, automatizamos tudo e aumentamos nosso faturamento."
+        </p>
     </div>
 </section>
 
@@ -75,17 +86,17 @@
 
             <div class="step reveal">
                 <span>1</span>
-                <p>Você descreve sua necessidade</p>
+                <p>Você explica sua necessidade</p>
             </div>
 
             <div class="step reveal">
                 <span>2</span>
-                <p>Criamos a solução ideal</p>
+                <p>Criamos sua solução</p>
             </div>
 
             <div class="step reveal">
                 <span>3</span>
-                <p>Você começa a usar em poucos dias</p>
+                <p>Você usa e cresce</p>
             </div>
 
         </div>
@@ -94,13 +105,22 @@
 
 <section id="contato">
     <div class="container center">
-        <h2>Pronto para começar?</h2>
-        <a href="#" class="btn">Falar com especialista</a>
+
+        <h2>Solicite uma proposta</h2>
+
+        <form id="formContato">
+            <input type="text" placeholder="Seu nome" required>
+            <input type="email" placeholder="Seu email" required>
+            <textarea placeholder="Descreva sua necessidade"></textarea>
+
+            <button type="submit" class="btn">Enviar</button>
+        </form>
+
     </div>
 </section>
 
 <footer>
-    <p>© 2026 AppLoc - Todos os direitos reservados</p>
+    <p>© 2026 AppLoc</p>
 </footer>
 
 <script src="script.js"></script>
