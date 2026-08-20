@@ -26,7 +26,7 @@ document.getElementById("formContato").addEventListener("submit", function(e){
 
     let texto = `Olá, meu nome é ${nome}. ${msg}`;
 
-    let url = `https://wa.me/5599999999999?text=${encodeURIComponent(texto)}`;
+    let url = `https://wa.me/5584987553068?text=${encodeURIComponent(texto)}`;
 
     window.open(url, "_blank");
 });
