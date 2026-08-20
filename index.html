@@ -1,460 +1,109 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locapp - Locação de Aplicativos Customizados</title>
-    <style>
-        /* ==========================================
-           1. ESTILOS GERAIS (RESET E CONFIGURAÇÃO)
-           ========================================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+    <title>AppLoc | Sistemas sob medida</title>
 
-        body {
-            background: #121212;
-            color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ==========================================
-           2. TOPO DO SITE (HEADER / NAVEGAÇÃO)
-           ========================================== */
-        header {
-            padding: 15px 0; /* Ajustado levemente para acomodar a imagem com elegância */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(18, 18, 18, 0.8);
-        }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Estilos ajustados para a nova Logomarca */
-        .logo-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo-img {
-    height: 50px; /* Altere essa altura para o tamanho que achar mais bonito no seu menu */
-    width: auto;  /* Faz a largura se ajustar sozinha sem achatar as letras */
-    display: block;
-    object-fit: contain;
-}
-        .logo-img:hover {
-            transform: scale(1.02);
-        }
-
-        .btn-nav {
-            background: rgba(255, 255, 255, 0.05);
-            color: #64D2C1;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 8px;
-            text-decoration: none;
-            border: 1px solid rgba(100, 210, 193, 0.3);
-            transition: 0.3s;
-        }
-        .btn-nav:hover { background: #64D2C1; color: #121212; }
-
-        /* ==========================================
-           3. ESTRUTURA LADO A LADO (LAYOUT COM FLEXBOX)
-           ========================================== */
-        .main-columns {
-            display: flex;
-            flex-direction: column;
-            margin-top: 40px;
-            gap: 40px;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .column-left { width: 100%; }
-
-        .column-left h1 {
-            font-size: 42px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .column-left h1 span { color: #64D2C1; }
-
-        .column-left p {
-            font-size: 18px;
-            color: #aaa;
-            margin-bottom: 35px;
-        }
-
-        .column-right {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* ==========================================
-           4. DESIGN DOS CARDS DE ANÚNCIO (DINÂMICOS)
-           ========================================== */
-        .ads-card {
-    background: linear-gradient(135deg, #1e1e1e 0%, #152523 100%);
-    border: 1px solid rgba(100, 210, 193, 0.4);
-    border-radius: 16px;
-    padding: 18px;
-    position: relative;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s, border-color 0.3s;
-    
-    /* 🚀 AS MÁGICAS PARA O TEXTO VOLTAR: */
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important; /* Força o card a esticar para baixo e mostrar o texto */
-    min-height: 380px !important; /* Garante tamanho suficiente para foto + textos */
-    overflow: visible !important; /* Não esconde nada que passe do limite */
-}
-
-        .ads-card:hover {
-            transform: translateY(-2px);
-            border-color: #64D2C1;
-        }
-
-        .ads-badge {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 8px;
-            color: #64D2C1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .ads-card h2 {
-    font-size: 18px !important;
-    color: #ffffff !important;
-    margin-top: 12px !important;
-    margin-bottom: 6px !important;
-    font-weight: 800 !important;
-    display: block !important;
-}
-
-.ads-card p {
-    font-size: 13px !important;
-    color: #b3b3b3 !important;
-    margin-bottom: 12px !important;
-    line-height: 1.4 !important;
-    display: block !important;
-}
-       .ads-card-img {
-    width: 100% !important;
-    height: 180px !important; /* Mesma altura do Troca-Troca */
-    object-fit: cover !important; /* Preenche de ponta a ponta sem achatar */
-    object-position: center !important;
-    border-radius: 12px !important;
-    margin-top: 5px !important;
-    margin-bottom: 12px !important;
-    display: block !important;
-}
-
-        /* ==========================================
-           5. BOTÕES DE AÇÃO
-           ========================================== */
-        .btn-primary {
-            background: #64D2C1;
-            color: #121212;
-            padding: 16px 32px;
-            font-size: 16px;
-            font-weight: 800;
-            border-radius: 14px;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-            box-shadow: 0 6px 20px rgba(100, 210, 193, 0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(100, 210, 193, 0.3);
-        }
-
-        .btn-ads {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            padding: 8px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-            width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-ads:hover {
-            background: #64D2C1;
-            color: #121212;
-            border-color: #64D2C1;
-        }
-
-        .no-ads {
-            font-size: 12px;
-            color: #555;
-            text-align: center;
-            padding: 20px;
-            border: 1px dashed #222;
-            border-radius: 12px;
-        }
-
-        /* ==========================================
-           6. SEÇÃO DE RECURSOS / PRODUTOS
-           ========================================== */
-        .features { padding: 60px 0 40px 0; }
-        .section-title { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 40px; }
-        .section-title span { color: #64D2C1; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 30px; transition: 0.3s; }
-        .card:hover { border-color: #64D2C1; background: rgba(255, 255, 255, 0.05); transform: translateY(-4px); }
-        .card-icon { font-size: 35px; margin-bottom: 15px; }
-        .card h3 { font-size: 20px; margin-bottom: 12px; color: #ffffff; }
-        .card p { color: #888; font-size: 14px; }
-
-        /* ==========================================
-           7. RODAPÉ
-           ========================================== */
-        footer {
-            margin-top: 80px;
-            padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-            font-size: 11px;
-            color: #555;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-
-        /* ==========================================
-           8. TELA DE MANUTENÇÃO INTERATIVA
-           ========================================== */
-        #maintenanceOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-        #maintenanceOverlay .icon { font-size: 60px; margin-bottom: 15px; animation: pulse 2s infinite; }
-        #maintenanceOverlay h2 { color: #64D2C1; font-size: 32px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
-        #maintenanceOverlay p { color: #aaa; font-size: 16px; max-width: 450px; line-height: 1.5; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-
-        /* ==========================================
-           9. RESPONSIVIDADE
-           ========================================== */
-        @media (min-width: 992px) {
-    .main-columns {
-        flex-direction: row;
-        align-items: flex-start; /* Mantém o alinhamento pelo topo */
-        justify-content: space-between;
-        gap: 50px; /* Espaçamento fixo ideal entre as duas colunas */
-    }
-
-    .column-left {
-        width: 55%; /* Ajustado para equilibrar o texto */
-        position: sticky; /* 🚀 MÁGICA: O texto vai fixar na tela enquanto o usuário rola os anúncios */
-        top: 100px; /* Distância do topo do site para não grudar no cabeçalho */
-    }
-
-    .column-right {
-        width: 40%;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-end;
-        
-        /* 💡 OPCIONAL: Caso queira limitar o tamanho vertical da lista de anúncios */
-        max-height: 75vh; /* Limita a altura a 75% da tela do usuário */
-        overflow-y: auto; /* Cria uma rolagem suave só nos anúncios se houver muitos */
-        padding-right: 5px; /* Espaço para a barra de rolagem não colar no card */
-    }
-
-    /* Remove ou personaliza a barra de rolagem lateral dos anúncios para ficar invisível/discreta */
-    .column-right::-webkit-scrollbar {
-        width: 4px;
-    }
-    .column-right::-webkit-scrollbar-thumb {
-        background: rgba(100, 210, 193, 0.3);
-        border-radius: 4px;
-    }
-
-    .ads-card {
-        width: 100%;
-        max-width: 340px;
-    }
-}
-        @media (max-width: 768px) {
-            .column-left h1 { font-size: 32px; }
-            .column-left p { font-size: 16px; }
-            .section-title { font-size: 24px; }
-            .logo-img { height: 38px; } /* Reduz ligeiramente a logo em telas menores */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="maintenanceOverlay">
-    <div class="icon">🚀</div>
-    <h2>AppLoc em Manutenção</h2>
-    <p>Estamos implementando melhorias e otimizando nossos servidores para lhe oferecer ferramentas ainda mais inteligentes. Voltamos logo!</p>
-</div>
+<header>
+    <div class="container nav">
+        <div class="logo">AppLoc</div>
 
-<div id="mainContent">
-    <header>
-        <div class="container nav-wrapper">
-            <a href="#" class="logo-link">
-                <img src="<a href="#" class="logo-link">
-    <img src="logo.png" alt="AppLoc" class="logo-img">
-</a>">
-                
-            </a>    
-                            
-            <a href="trocatroca.html" id="linkTroca" class="btn-nav">Ir para o Troca-Troca ➔</a>
-        </div>
-    </header>
-
-    <main class="container">
-        
-        <div class="main-columns">
-            
-            <div class="column-left">
-                <h1>Sistemas Inteligentes sob Medida para o seu <span>Negócio</span></h1>
-                <p>Alugue aplicações customizadas de alta performance para otimizar os seus recebimentos, gestão e processos internos sem custo de desenvolvimento.</p>
-                <a href="https://wa.me/5584991339061" target="_blank" class="btn-primary">Fale Conosco no WhatsApp</a>
-            </div>
-
-            <div class="column-right" id="mainAdsContainer"></div>
-            
-        </div>
-
-        <section class="features">
-            <h2 class="section-title">Nossas <span>Soluções</span></h2>
-            <div class="grid">
-                
-                <div class="card">
-                    <div class="card-icon">⚡</div>
-                    <h3>Gerador de Cobrança Pix</h3>
-                    <p>Criação rápida de links de pagamento personalizados com QR Code e recurso "Copia e Cola" dinâmico para os seus clientes com tempo de expiração por segurança.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3>Gestão & Finanças</h3>
-                    <p>Estruturas inteligentes integradas para monitorização de fluxos, relatórios operacionais eficientes e otimização de rotinas administrativas diárias.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">⚙️</div>
-                    <h3>Sistemas Sob Demanda</h3>
-                    <p>Precisa de uma ferramenta específica para a sua equipe? Desenvolvemos e alugamos a plataforma exata de acordo com a necessidade da sua empresa.</p>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        POWERED BY APPLOC &copy; 2026. TODOS OS DIREITOS RESERVADOS.
-    </footer>
-</div>
-
-<script>
-    // ==========================================
-    // CONFIGURAÇÃO: ATIVAR/DESATIVAR MANUTENÇÃO DO SITE PRINCIPAL
-    // ==========================================
-    const EM_MANUTENCAO_GERAL = false; // Mude para true para fechar o site principal da Locapp e false para voltar ao ar
-
-    document.addEventListener("DOMContentLoaded", () => {
-        verificarManutencaoGeral();
-        carregarAnunciosTrocaTroca();
-    });
-
-    function verificarManutencaoGeral() {
-        if (EM_MANUTENCAO_GERAL) {
-            document.getElementById('maintenanceOverlay').style.display = 'flex';
-            document.getElementById('mainContent').style.display = 'none';
-        }
-    }
-
-    function escapeHTML(str) {
-        return str.replace(/[&<>'"]/g, 
-            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-        );
-    }
-
-    function carregarAnunciosTrocaTroca() {
-        const container = document.getElementById('mainAdsContainer');
-        let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
-
-        if (products.length === 0) {
-            container.innerHTML = `<div class="no-ads">Nenhum anúncio de parceiro ativo.</div>`;
-            return;
-        }
-
-        container.innerHTML = "";
-        const limitados = products.slice(0, 3);
-
-        limitados.forEach(product => {
-            const safeTitle = escapeHTML(product.title);
-            const safeOwner = escapeHTML(product.owner);
-            const safeDesc = escapeHTML(product.desc);
-            const safePrice = escapeHTML(product.price);
-
-            const msgZap = encodeURIComponent(`Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na Locapp e tenho interesse.`);
-            const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
-
-            // ASSIM DEVE FICAR O BLOCO DENTRO DA FUNÇÃO carregarAnunciosTrocaTroca():
-// Substitua o trecho dentro do forEach pelo bloco abaixo:
-container.innerHTML += `
-    <div class="ads-card">
-        <div class="ads-badge">Parceiro</div>
-        
-        ${product.img ? `<img src="${product.img}" class="ads-card-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">` : ''}
-        
-        <h2>${safeTitle}</h2>
-        <div style="font-size: 10px; color: #64D2C1; margin-bottom: 5px; text-transform: uppercase; font-weight: 700;">Por: ${safeOwner}</div>
-        <p>${safeDesc}</p>
-        <div style="font-size: 16px; font-weight: 800; margin-bottom: 12px; color: #ffffff;">R$ ${safePrice}</div>
-        
-        <a href="${linkWhatsapp}" target="_blank" class="btn-ads">Fazer Orçamento / Comprar</a>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#solucoes">Soluções</a>
+            <a href="#como">Como funciona</a>
+            <a href="#contato">Contato</a>
+        </nav>
     </div>
-`;});
-    }
-</script>
+</header>
+
+<section id="inicio" class="hero">
+    <div class="container">
+        <h1>Sistemas inteligentes para escalar seu <span>negócio</span></h1>
+
+        <p>
+            Automatize processos, aumente seus resultados e tenha controle total
+            da sua operação com soluções sob medida.
+        </p>
+
+        <a href="#" class="btn">Solicitar demonstração</a>
+
+        <div class="trust">
+            +50 empresas atendidas • soluções em produção • suporte contínuo
+        </div>
+    </div>
+</section>
+
+<section id="solucoes">
+    <div class="container">
+
+        <h2>Soluções</h2>
+
+        <div class="grid">
+
+            <div class="card reveal">
+                <h3>Controle Financeiro</h3>
+                <p>Gerencie receitas, despesas e tenha visão completa do seu negócio.</p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Automação de Processos</h3>
+                <p>Reduza trabalho manual e aumente sua produtividade.</p>
+            </div>
+
+            <div class="card reveal">
+                <h3>Relatórios Inteligentes</h3>
+                <p>Tome decisões com base em dados reais e atualizados.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="como">
+    <div class="container">
+
+        <h2>Como funciona</h2>
+
+        <div class="steps">
+
+            <div class="step reveal">
+                <span>1</span>
+                <p>Você descreve sua necessidade</p>
+            </div>
+
+            <div class="step reveal">
+                <span>2</span>
+                <p>Criamos a solução ideal</p>
+            </div>
+
+            <div class="step reveal">
+                <span>3</span>
+                <p>Você começa a usar em poucos dias</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="contato">
+    <div class="container center">
+        <h2>Pronto para começar?</h2>
+        <a href="#" class="btn">Falar com especialista</a>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 AppLoc - Todos os direitos reservados</p>
+</footer>
+
+<script src="script.js"></script>
+
 </body>
 </html>
