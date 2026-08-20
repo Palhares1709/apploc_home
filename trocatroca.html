@@ -2,307 +2,3108 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Troca-Troca - AppLoc</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="theme-color" content="#0b1110">
+
+    <title>Troca-Troca | AppLoc</title>
+
     <style>
-        /* Estilos Base (Padrão Dark Locapp) */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: #121212; color: white; padding: 20px 15px 80px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 400px; display: flex; flex-direction: column; }
-        
-        /* Cabeçalho */
-        header { text-align: center; margin-bottom: 25px; margin-top: 10px; }
-        header h1 { font-size: 24px; font-weight: 800; color: #64D2C1; letter-spacing: -0.5px; }
-        header p { font-size: 13px; color: #888; margin-top: 4px; }
 
-        /* Grid e Cards de Produtos */
-        .products-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; }
-        .product-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; position: relative; }
+        /* =========================================================
+           APPLOC - TROCA-TROCA
+           VERSÃO MODERNA
+           ========================================================= */
+
+        :root {
+            --bg: #0b1110;
+            --bg-soft: #101817;
+            --card: rgba(255,255,255,0.045);
+            --card-hover: rgba(255,255,255,0.065);
+
+            --primary: #64D2C1;
+            --primary-dark: #42b9a8;
+
+            --white: #ffffff;
+            --text: #eeeeee;
+            --muted: #929b99;
+            --muted-dark: #59615f;
+
+            --border: rgba(255,255,255,0.08);
+            --border-primary: rgba(100,210,193,0.25);
+
+            --whatsapp: #25D366;
+            --danger: #ff5c67;
+
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+
+            --shadow:
+                0 20px 60px rgba(0,0,0,0.35);
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(100,210,193,0.08),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(100,210,193,0.04),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            color: var(--white);
+
+            min-height: 100vh;
+
+            padding-bottom: 70px;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================================
+           FUNDO DECORATIVO
+           ========================================================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 420px;
+            height: 420px;
+
+            top: -220px;
+            right: -180px;
+
+            background: rgba(100,210,193,0.06);
+
+            filter: blur(90px);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+           ========================================================= */
+
+        .container {
+            width: calc(100% - 30px);
+            max-width: 1180px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+           HEADER
+           ========================================================= */
+
+        .topbar {
+            width: 100%;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(11,17,16,0.82);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+        }
+
+        .topbar-inner {
+            width: calc(100% - 30px);
+            max-width: 1180px;
+
+            min-height: 74px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        /* LOGO */
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+
+            text-decoration: none;
+
+            min-width: 0;
+        }
+
+        .logo-img {
+            height: 43px;
+            width: auto;
+
+            object-fit: contain;
+
+            display: block;
+
+            transition: 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.03);
+        }
+
+
+        /* BOTÃO VOLTAR */
+
+        .back-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 10px 15px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            color: var(--text);
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: 0.25s ease;
+        }
+
+        .back-button:hover {
+            background:
+                rgba(100,210,193,0.12);
+
+            border-color:
+                var(--border-primary);
+
+            color: var(--primary);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .hero {
+            text-align: center;
+
+            padding:
+                55px 0
+                35px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(100,210,193,0.08);
+
+            border:
+                1px solid rgba(100,210,193,0.18);
+
+            color: var(--primary);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 17px;
+        }
+
+        .hero-badge::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            background: var(--primary);
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px rgba(100,210,193,0.8);
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 5vw, 48px);
+
+            line-height: 1.08;
+
+            letter-spacing: -1.8px;
+
+            font-weight: 850;
+
+            margin-bottom: 13px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            max-width: 600px;
+
+            margin: auto;
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =========================================================
+           ÁREA DE PRODUTOS
+           ========================================================= */
+
+        .products-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(290px, 1fr)
+                );
+
+            gap: 22px;
+
+            width: 100%;
+        }
+
+
+        /* =========================================================
+           CARD
+           ========================================================= */
+
+        .product-card {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.065),
+                    rgba(255,255,255,0.025)
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            padding: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 12px 40px rgba(0,0,0,0.18);
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-width: 0;
+
+            animation:
+                cardEnter 0.5s ease both;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(100,210,193,0.28);
+
+            box-shadow:
+                0 20px 55px rgba(0,0,0,0.32);
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           IMAGEM
+           ========================================================= */
+
+        .product-image-wrapper {
+            position: relative;
+
+            width: 100%;
+
+            height: 235px;
+
+            overflow: hidden;
+
+            border-radius:
+                18px;
+
+            background:
+                #161d1c;
+
+            margin-bottom: 16px;
+        }
+
         .product-img {
-    width: 100%;
-    height: 200px; /* Um pouco maior no mobile para dar um visual premium */
-    object-fit: cover; /* 🚀 MÁGICA: Preenche totalmente o card */
-    object-position: center;
-    border-radius: 16px;
-    margin-bottom: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.02);
-}
-        .product-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; }
-        .product-owner { font-size: 11px; color: #64D2C1; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
-        .product-desc { font-size: 13px; color: #aaa; line-height: 1.4; margin-bottom: 14px; }
-        .product-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-        .product-price { font-size: 18px; font-weight: 800; color: white; }
-        
-        /* Botões de Ação do Card */
-        .btn-action { background: #64D2C1; color: #121212; border: none; padding: 16px; width: 100%; font-size: 15px; font-weight: 800; border-radius: 16px; cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none; display: block; }
-        .btn-action:active { transform: scale(0.98); }
-        .btn-whatsapp { background: #25D366; color: white; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.15); }
-        
-        /* Controles do Admin nos Cards (Ficam estritamente ocultos) */
-        .admin-actions { position: absolute; top: 12px; right: 12px; display: none; gap: 8px; z-index: 10; }
-        .btn-delete { background: rgba(255, 82, 82, 0.2); border: 1px solid rgba(255, 82, 82, 0.4); color: #ff5252; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
-        .btn-edit { background: rgba(100, 210, 193, 0.2); border: 1px solid rgba(100, 210, 193, 0.4); color: #64D2C1; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; font-size: 12px; border: none; }
+            width: 100%;
+            height: 100%;
 
-        /* Painel Admin */
-        .admin-toggle { text-align: center; margin-top: 30px; font-size: 12px; color: #444; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 10px; }
-        .admin-panel { background: #1a1a1a; border: 1px solid rgba(100, 210, 193, 0.2); border-radius: 24px; padding: 20px; margin-top: 15px; display: none; }
-        .admin-panel h3 { font-size: 16px; color: #64D2C1; margin-bottom: 15px; text-align: center; }
-        
-        /* Formulários */
-        input, textarea { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #333; background: #121212; color: white; margin-bottom: 12px; outline: none; font-size: 14px; }
-        input:focus, textarea:focus { border-color: #64D2C1; }
-        
-        .img-preview { width: 100%; height: 100px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; display: none; border: 1px dashed #444; }
-        .empty-state { text-align: center; padding: 40px 20px; color: #555; font-size: 14px; font-weight: 600; }
-        .footer { text-align: center; margin-top: 40px; font-size: 8px; color: #222; letter-spacing: 2px; font-weight: 900; }
+            object-fit: cover;
 
-        /* Tela de Manutenção Interativa */
-        #maintenanceOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #121212; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-        #maintenanceOverlay .icon { font-size: 50px; margin-bottom: 15px; animation: pulse 2s infinite; }
-        #maintenanceOverlay h2 { color: #64D2C1; font-size: 26px; font-weight: 800; margin-bottom: 10px; }
-        #maintenanceOverlay p { color: #aaa; font-size: 14px; max-width: 300px; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+            object-position: center;
+
+            display: block;
+
+            transition:
+                transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.035);
+        }
+
+
+        /* ETIQUETA */
+
+        .product-badge {
+            position: absolute;
+
+            top: 12px;
+            left: 12px;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(10,15,14,0.78);
+
+            backdrop-filter:
+                blur(8px);
+
+            color:
+                var(--primary);
+
+            border:
+                1px solid
+                rgba(100,210,193,0.18);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           CONTEÚDO DO CARD
+           ========================================================= */
+
+        .product-owner {
+            color: var(--primary);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 6px;
+        }
+
+        .product-title {
+            color: var(--white);
+
+            font-size: 19px;
+
+            line-height: 1.25;
+
+            font-weight: 800;
+
+            margin-bottom: 9px;
+
+            word-break: break-word;
+        }
+
+        .product-desc {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.55;
+
+            margin-bottom: 18px;
+
+            min-height: 40px;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================================================
+           RODAPÉ DO CARD
+           ========================================================= */
+
+        .product-footer {
+            margin-top: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            padding-top: 13px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+        .price-label {
+            display: block;
+
+            color:
+                var(--muted-dark);
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 2px;
+        }
+
+        .product-price {
+            color: var(--white);
+
+            font-size: 21px;
+
+            line-height: 1;
+
+            font-weight: 900;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        /* =========================================================
+           WHATSAPP
+           ========================================================= */
+
+        .btn-whatsapp {
+            flex-shrink: 0;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            min-height: 43px;
+
+            padding:
+                0 14px;
+
+            border-radius:
+                13px;
+
+            background:
+                var(--whatsapp);
+
+            color:
+                white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 8px 22px
+                rgba(37,211,102,0.13);
+
+            transition:
+                0.25s ease;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 27px
+                rgba(37,211,102,0.22);
+        }
+
+        .btn-whatsapp:active {
+            transform: scale(0.97);
+        }
+
+
+        /* =========================================================
+           ADMIN ACTIONS
+           ========================================================= */
+
+        .admin-actions {
+            position: absolute;
+
+            top: 24px;
+            right: 24px;
+
+            display: none;
+
+            gap: 7px;
+
+            z-index: 20;
+        }
+
+        .admin-btn {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            border: 1px solid;
+
+            backdrop-filter:
+                blur(10px);
+
+            transition:
+                0.2s ease;
+        }
+
+        .btn-edit {
+            background:
+                rgba(100,210,193,0.16);
+
+            border-color:
+                rgba(100,210,193,0.3);
+
+            color:
+                var(--primary);
+        }
+
+        .btn-delete {
+            background:
+                rgba(255,92,103,0.13);
+
+            border-color:
+                rgba(255,92,103,0.25);
+
+            color:
+                var(--danger);
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.08);
+        }
+
+
+        /* =========================================================
+           ESTADO VAZIO
+           ========================================================= */
+
+        .empty-state {
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding:
+                60px 25px;
+
+            border:
+                1px dashed
+                rgba(255,255,255,0.09);
+
+            border-radius:
+                var(--radius-lg);
+
+            background:
+                rgba(255,255,255,0.02);
+
+            color:
+                var(--muted);
+
+            animation:
+                cardEnter 0.5s ease;
+        }
+
+        .empty-icon {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(100,210,193,0.08);
+
+            border:
+                1px solid
+                rgba(100,210,193,0.12);
+
+            color:
+                var(--primary);
+
+            font-size: 24px;
+        }
+
+        .empty-state strong {
+            display: block;
+
+            color:
+                var(--text);
+
+            font-size: 16px;
+
+            margin-bottom: 6px;
+        }
+
+        .empty-state span {
+            font-size: 12px;
+
+            color:
+                var(--muted-dark);
+        }
+
+
+        /* =========================================================
+           ADMIN TOGGLE
+           ========================================================= */
+
+        .admin-toggle {
+            width: fit-content;
+
+            margin:
+                42px auto 0;
+
+            padding:
+                10px 15px;
+
+            color:
+                var(--muted-dark);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.2px;
+
+            cursor: pointer;
+
+            border-radius: 10px;
+
+            transition:
+                0.25s ease;
+        }
+
+        .admin-toggle:hover {
+            color:
+                var(--primary);
+
+            background:
+                rgba(100,210,193,0.06);
+        }
+
+
+        /* =========================================================
+           PAINEL ADMIN
+           ========================================================= */
+
+        .admin-panel {
+            width: 100%;
+
+            max-width: 650px;
+
+            margin:
+                16px auto 0;
+
+            padding:
+                24px;
+
+            border-radius:
+                var(--radius-lg);
+
+            border:
+                1px solid
+                var(--border-primary);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(100,210,193,0.055),
+                    rgba(255,255,255,0.025)
+                );
+
+            box-shadow:
+                var(--shadow);
+
+            display: none;
+
+            animation:
+                panelEnter 0.35s ease;
+        }
+
+        @keyframes panelEnter {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .admin-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding-bottom:
+                18px;
+
+            margin-bottom:
+                18px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.06);
+        }
+
+        .admin-icon {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(100,210,193,0.10);
+
+            color:
+                var(--primary);
+
+            font-size: 19px;
+        }
+
+        .admin-header h3 {
+            color:
+                var(--white);
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+        .admin-header p {
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 2px;
+        }
+
+
+        /* =========================================================
+           FORMULÁRIO
+           ========================================================= */
+
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-label {
+            display: block;
+
+            color:
+                #b9c0be;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.8px;
+
+            margin:
+                0 0 6px 3px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(0,0,0,0.22);
+
+            color:
+                var(--white);
+
+            border-radius:
+                13px;
+
+            padding:
+                14px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            transition:
+                0.2s ease;
+        }
+
+        textarea {
+            resize: vertical;
+
+            min-height: 95px;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color:
+                #555e5c;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color:
+                rgba(100,210,193,0.55);
+
+            background:
+                rgba(100,210,193,0.025);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(100,210,193,0.06);
+        }
+
+
+        /* =========================================================
+           PREVIEW
+           ========================================================= */
+
+        .img-preview-wrapper {
+            display: none;
+
+            margin:
+                3px 0 14px;
+        }
+
+        .img-preview-label {
+            color:
+                var(--muted);
+
+            font-size: 10px;
+
+            margin-bottom: 6px;
+        }
+
+        .img-preview {
+            width: 100%;
+
+            height: 150px;
+
+            object-fit: cover;
+
+            border-radius:
+                14px;
+
+            border:
+                1px solid
+                rgba(100,210,193,0.18);
+
+            display: block;
+
+            background:
+                #151c1b;
+        }
+
+
+        /* =========================================================
+           BOTÃO PUBLICAR
+           ========================================================= */
+
+        .btn-action {
+            width: 100%;
+
+            min-height: 52px;
+
+            border: none;
+
+            border-radius:
+                14px;
+
+            background:
+                var(--primary);
+
+            color:
+                #07100e;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 28px
+                rgba(100,210,193,0.15);
+
+            transition:
+                0.25s ease;
+        }
+
+        .btn-action:hover {
+            background:
+                #78ddce;
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 14px 35px
+                rgba(100,210,193,0.23);
+        }
+
+        .btn-action:active {
+            transform:
+                scale(0.98);
+        }
+
+
+        /* =========================================================
+           MODAL
+           ========================================================= */
+
+        .modal-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 5000;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,0.72);
+
+            backdrop-filter:
+                blur(9px);
+
+            -webkit-backdrop-filter:
+                blur(9px);
+        }
+
+        .modal {
+            width: 100%;
+
+            max-width: 400px;
+
+            padding: 25px;
+
+            border-radius:
+                22px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.09);
+
+            background:
+                #111817;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,0.55);
+
+            animation:
+                modalEnter 0.25s ease;
+        }
+
+        @keyframes modalEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 16px;
+
+            margin-bottom: 15px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(100,210,193,0.10);
+
+            color:
+                var(--primary);
+
+            font-size: 22px;
+        }
+
+        .modal h3 {
+            font-size: 19px;
+
+            font-weight: 850;
+
+            margin-bottom: 7px;
+        }
+
+        .modal p {
+            color:
+                var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 18px;
+        }
+
+        .modal-buttons {
+            display: flex;
+
+            gap: 9px;
+        }
+
+        .modal-button {
+            flex: 1;
+
+            min-height: 45px;
+
+            border-radius:
+                12px;
+
+            border: 1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            color:
+                var(--text);
+
+            font-family: inherit;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+        .modal-button.primary {
+            background:
+                var(--primary);
+
+            color:
+                #07100e;
+
+            border-color:
+                transparent;
+        }
+
+        .modal-button.danger {
+            background:
+                var(--danger);
+
+            color:
+                white;
+
+            border-color:
+                transparent;
+        }
+
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+
+        #toastContainer {
+            position: fixed;
+
+            left: 50%;
+
+            bottom: 25px;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 9000;
+
+            width:
+                min(92%, 400px);
+
+            pointer-events: none;
+        }
+
+        .toast {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                14px 16px;
+
+            border-radius:
+                14px;
+
+            background:
+                rgba(20,28,27,0.96);
+
+            border:
+                1px solid
+                rgba(100,210,193,0.20);
+
+            box-shadow:
+                0 15px 45px
+                rgba(0,0,0,0.4);
+
+            color:
+                var(--white);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            animation:
+                toastIn 0.3s ease;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast-icon {
+            color:
+                var(--primary);
+
+            font-size: 17px;
+        }
+
+
+        /* =========================================================
+           MANUTENÇÃO
+           ========================================================= */
+
+        #maintenanceOverlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 99999;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(100,210,193,0.08),
+                    transparent 40%
+                ),
+                var(--bg);
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+        .maintenance-box {
+            max-width: 420px;
+        }
+
+        .maintenance-icon {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 22px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background:
+                rgba(100,210,193,0.08);
+
+            border:
+                1px solid
+                rgba(100,210,193,0.16);
+
+            color:
+                var(--primary);
+
+            font-size: 30px;
+
+            animation:
+                pulse 2s infinite;
+        }
+
+        .maintenance-box h2 {
+            color:
+                var(--white);
+
+            font-size: 27px;
+
+            font-weight: 850;
+
+            margin-bottom: 10px;
+        }
+
+        .maintenance-box h2 span {
+            color:
+                var(--primary);
+        }
+
+        .maintenance-box p {
+            color:
+                var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 60px;
+
+            color:
+                #343b39;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           RESPONSIVIDADE
+           ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .topbar-inner {
+                min-height: 67px;
+            }
+
+            .logo-img {
+                height: 36px;
+            }
+
+            .back-button {
+                padding:
+                    9px 11px;
+
+                font-size: 10px;
+            }
+
+            .hero {
+                padding:
+                    42px 0
+                    28px;
+            }
+
+            .hero h1 {
+                letter-spacing:
+                    -1px;
+            }
+
+            .products-grid {
+                grid-template-columns:
+                    1fr;
+
+                gap: 17px;
+            }
+
+            .product-image-wrapper {
+                height:
+                    215px;
+            }
+
+            .product-card {
+                border-radius:
+                    21px;
+            }
+
+            .admin-panel {
+                padding:
+                    20px;
+            }
+        }
+
+
+        @media (min-width: 701px) {
+
+            .product-image-wrapper {
+                height:
+                    245px;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+
+            .container {
+                width:
+                    calc(100% - 22px);
+            }
+
+            .topbar-inner {
+                width:
+                    calc(100% - 22px);
+            }
+
+            .hero h1 {
+                font-size:
+                    30px;
+            }
+
+            .hero p {
+                font-size:
+                    13px;
+            }
+
+            .product-footer {
+                align-items:
+                    flex-end;
+            }
+
+            .product-price {
+                font-size:
+                    19px;
+            }
+
+            .btn-whatsapp {
+                padding:
+                    0 11px;
+
+                font-size:
+                    11px;
+            }
+        }
+
     </style>
 </head>
+
+
 <body>
 
+
+<!-- =========================================================
+     TELA DE MANUTENÇÃO
+     ========================================================= -->
+
 <div id="maintenanceOverlay">
-    <div class="icon">⚙️</div>
-    <h2>Locapp em Manutenção</h2>
-    <p>Estamos atualizando nossa estrutura para te entregar uma experiência melhor. Voltamos em instantes!</p>
-</div>
 
-<div class="container" id="mainContent">
-    <header>
-        <h1>Troca-Troca AppLoc</h1>
-        <p>Classificados e desapegos entre amigos</p>
-    </header>
+    <div class="maintenance-box">
 
-    <div class="products-grid" id="productsContainer"></div>
+        <div class="maintenance-icon">
+            ⚙️
+        </div>
 
-    <div class="admin-toggle" onclick="verificarAcessoAdmin()">⚙️ Painel do Administrador</div>
+        <h2>
+            App<span>Loc</span> em Manutenção
+        </h2>
 
-    <div class="admin-panel" id="adminPanel">
-        <h3 id="formTitle">Anunciar Novo Produto</h3>
-        <input type="hidden" id="editIdInput">
-        
-        <input type="text" id="ownerInput" placeholder="Nome do Amigo (Vendedor)">
-        <input type="text" id="titleInput" placeholder="Título do Produto (Ex: Drone DJI)">
-        <input type="text" id="priceInput" inputmode="decimal" placeholder="Preço R$ 0,00" oninput="formatarMoeda(this)">
-        <input type="text" id="phoneInput" inputmode="tel" placeholder="WhatsApp com DDD (Ex: 84991339061)">
-        <input type="text" id="imgInput" placeholder="Link da Foto (URL da imagem)" oninput="previewImagem(this)">
-        <img id="panelImgPreview" class="img-preview" alt="Preview">
-        <textarea id="descInput" rows="3" placeholder="Descrição curta do produto..."></textarea>
-        
-        <button class="btn-action" id="btnSubmitForm" onclick="saveProduct()">Publicar Anúncio</button>
+        <p>
+            Estamos atualizando nossa estrutura para
+            entregar uma experiência ainda melhor.
+            Voltamos em breve!
+        </p>
+
     </div>
 
-    <div class="footer">POWERED BY PALHARES</div>
 </div>
 
+
+
+<!-- =========================================================
+     CABEÇALHO
+     ========================================================= -->
+
+<header class="topbar">
+
+    <div class="topbar-inner">
+
+        <a href="index.html"
+           class="logo-link"
+           title="Voltar para AppLoc">
+
+            <img
+                src="logo.png"
+                alt="AppLoc"
+                class="logo-img"
+            >
+
+        </a>
+
+
+        <a
+            href="index.html"
+            class="back-button"
+        >
+            ← Voltar para AppLoc
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     CONTEÚDO
+     ========================================================= -->
+
+<main
+    class="container"
+    id="mainContent"
+>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            Classificados AppLoc
+        </div>
+
+        <h1>
+            Troca-Troca
+            <span>AppLoc</span>
+        </h1>
+
+        <p>
+            Um espaço simples e seguro para anunciar,
+            desapegar e encontrar produtos entre amigos.
+        </p>
+
+    </section>
+
+
+
+    <!-- PRODUTOS -->
+
+    <section
+        class="products-grid"
+        id="productsContainer"
+    ></section>
+
+
+
+    <!-- ADMIN -->
+
+    <div
+        class="admin-toggle"
+        onclick="verificarAcessoAdmin()"
+    >
+        ⚙️ Painel do Administrador
+    </div>
+
+
+
+    <section
+        class="admin-panel"
+        id="adminPanel"
+    >
+
+        <div class="admin-header">
+
+            <div class="admin-icon">
+                ⚙️
+            </div>
+
+            <div>
+
+                <h3 id="formTitle">
+                    Novo anúncio
+                </h3>
+
+                <p>
+                    Cadastre ou atualize um produto
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <input
+            type="hidden"
+            id="editIdInput"
+        >
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Anunciante
+            </label>
+
+            <input
+                type="text"
+                id="ownerInput"
+                placeholder="Nome do vendedor"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Produto
+            </label>
+
+            <input
+                type="text"
+                id="titleInput"
+                placeholder="Ex.: Drone DJI"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Preço
+            </label>
+
+            <input
+                type="text"
+                id="priceInput"
+                inputmode="decimal"
+                placeholder="R$ 0,00"
+                oninput="formatarMoeda(this)"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                WhatsApp
+            </label>
+
+            <input
+                type="text"
+                id="phoneInput"
+                inputmode="tel"
+                placeholder="DDD + número"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Foto
+            </label>
+
+            <input
+                type="text"
+                id="imgInput"
+                placeholder="Cole aqui o link da imagem"
+                oninput="previewImagem(this)"
+            >
+
+        </div>
+
+
+        <div
+            class="img-preview-wrapper"
+            id="imgPreviewWrapper"
+        >
+
+            <div class="img-preview-label">
+                Pré-visualização
+            </div>
+
+            <img
+                id="panelImgPreview"
+                class="img-preview"
+                alt="Pré-visualização"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                Descrição
+            </label>
+
+            <textarea
+                id="descInput"
+                rows="4"
+                placeholder="Descreva brevemente o produto..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            class="btn-action"
+            id="btnSubmitForm"
+            onclick="saveProduct()"
+        >
+            Publicar anúncio
+        </button>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+        POWERED BY APPLOC © 2026
+    </div>
+
+</main>
+
+
+
+<!-- =========================================================
+     MODAL LOGIN
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="loginModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-icon">
+            🔐
+        </div>
+
+        <h3>
+            Área administrativa
+        </h3>
+
+        <p>
+            Digite a senha para acessar
+            as configurações dos anúncios.
+        </p>
+
+        <input
+            type="password"
+            id="adminPasswordInput"
+            placeholder="Senha do administrador"
+            autocomplete="current-password"
+        >
+
+        <div class="modal-buttons">
+
+            <button
+                class="modal-button"
+                onclick="fecharModal('loginModal')"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="modal-button primary"
+                onclick="confirmarLogin()"
+            >
+                Entrar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MODAL CONFIRMAÇÃO
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="confirmModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-icon">
+            ⚠️
+        </div>
+
+        <h3>
+            Excluir anúncio?
+        </h3>
+
+        <p>
+            Essa ação removerá o anúncio
+            permanentemente deste dispositivo.
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                class="modal-button"
+                onclick="fecharModal('confirmModal')"
+            >
+                Cancelar
+            </button>
+
+            <button
+                class="modal-button danger"
+                onclick="confirmarExclusao()"
+            >
+                Excluir
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div id="toastContainer"></div>
+
+
+
 <script>
-    // ==========================================
-    // CONFIGURAÇÕES GERAIS DO ADMINISTRADOR
-    // ==========================================
-    const EM_MANUTENCAO = false; // true = ativa tela de manutenção
-    const SENHA_ADMIN = "@17101325#";   // 👈 ALTERE AQUI PARA A SUA SENHA DE PREFERÊNCIA
 
-    let isAdminAutenticado = false; // Controle interno de segurança
 
-    document.addEventListener("DOMContentLoaded", () => {
+/* =========================================================
+   CONFIGURAÇÕES
+   ========================================================= */
+
+const EM_MANUTENCAO = false;
+
+
+/*
+   ATENÇÃO:
+   Esta senha continua no código porque estamos mantendo
+   a estrutura atual do projeto.
+
+   Em uma etapa futura podemos retirar a autenticação
+   do código público e criar uma área administrativa
+   realmente protegida.
+*/
+
+const SENHA_ADMIN = "@17101325#";
+
+
+let isAdminAutenticado = false;
+
+let produtoParaExcluir = null;
+
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
         verificarManutencao();
+
         renderProducts();
-    });
 
-    function verificarManutencao() {
-        if (EM_MANUTENCAO) {
-            document.getElementById('maintenanceOverlay').style.display = 'flex';
-            document.getElementById('mainContent').style.display = 'none';
-        }
-    }
+        document
+            .getElementById("adminPasswordInput")
+            .addEventListener(
+                "keydown",
+                function(event) {
 
-    // Função que intercepta o clique e pede a senha
-    function verificarAcessoAdmin() {
-        if (isAdminAutenticado) {
-            // Se já digitou a senha antes, apenas fecha/abre normal
-            toggleAdminPanel();
-            return;
-        }
+                    if (event.key === "Enter") {
+                        confirmarLogin();
+                    }
 
-        const tentativaSenha = prompt("Digite a senha do Administrador para acessar as configurações:");
-
-        if (tentativaSenha === SENHA_ADMIN) {
-            isAdminAutenticado = true;
-            alert("Acesso concedido, Palhares!");
-            toggleAdminPanel();
-        } else if (tentativaSenha !== null) {
-            alert("Senha incorreta! Apenas o administrador da Locapp pode realizar essa ação.");
-        }
-    }
-
-    function escapeHTML(str) {
-        return str.replace(/[&<>'"]/g, 
-            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-        );
-    }
-
-    function formatarMoeda(campo) {
-        let valor = campo.value.replace(/\D/g, ""); 
-        if (valor === "") { campo.value = ""; return; }
-        valor = (parseFloat(valor) / 100).toFixed(2); 
-        campo.value = valor.replace(".", ","); 
-    }
-
-    function previewImagem(input) {
-        const preview = document.getElementById('panelImgPreview');
-        if(input.value.trim() !== "") {
-            preview.src = input.value.trim();
-            preview.style.display = 'block';
-        } else {
-            preview.style.display = 'none';
-        }
-    }
-
-    function toggleAdminPanel() {
-        const panel = document.getElementById('adminPanel');
-        const adminActions = document.querySelectorAll('.admin-actions');
-        const isHidden = (panel.style.display === 'none' || panel.style.display === '');
-        
-        panel.style.display = isHidden ? 'block' : 'none';
-        adminActions.forEach(box => box.style.display = isHidden ? 'flex' : 'none');
-
-        if (!isHidden) { resetarFormulario(); }
-    }
-
-    function resetarFormulario() {
-        ['ownerInput', 'titleInput', 'priceInput', 'phoneInput', 'imgInput', 'descInput', 'editIdInput'].forEach(id => {
-            document.getElementById(id).value = "";
-        });
-        document.getElementById('panelImgPreview').style.display = 'none';
-        document.getElementById('formTitle').innerText = "Anunciar Novo Produto";
-        document.getElementById('btnSubmitForm').innerText = "Publicar Anúncio";
-    }
-
-    function saveProduct() {
-        if (!isAdminAutenticado) return; // Trava extra de segurança
-
-        const editId = document.getElementById('editIdInput').value;
-        const owner = document.getElementById('ownerInput').value.trim();
-        const title = document.getElementById('titleInput').value.trim();
-        const priceRaw = document.getElementById('priceInput').value.trim();
-        const phone = document.getElementById('phoneInput').value.replace(/\D/g, ""); 
-        const img = document.getElementById('imgInput').value.trim();
-        const desc = document.getElementById('descInput').value.trim();
-
-        if (!owner || !title || !priceRaw || !phone || !desc) {
-            alert("Por favor, preencha todos os campos obrigatórios.");
-            return;
-        }
-
-        const finalImg = img || "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500";
-        let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
-
-        if (editId) {
-            products = products.map(p => {
-                if (p.id == editId) {
-                    return { id: p.id, owner, title, price: priceRaw, phone, img: finalImg, desc };
                 }
-                return p;
-            });
-            alert("Anúncio atualizado com sucesso!");
-        } else {
-            const newProduct = { id: Date.now(), owner, title, price: priceRaw, phone, img: finalImg, desc };
-            products.unshift(newProduct);
-            alert("Anúncio publicado com sucesso!");
-        }
+            );
 
-        localStorage.setItem('locapp_marketplace', JSON.stringify(products));
-        resetarFormulario();
-        toggleAdminPanel(); 
-        renderProducts();   
+    }
+);
+
+
+
+/* =========================================================
+   MANUTENÇÃO
+   ========================================================= */
+
+function verificarManutencao() {
+
+    if (!EM_MANUTENCAO) {
+        return;
     }
 
-    function renderProducts() {
-        const container = document.getElementById('productsContainer');
-        let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
+    document
+        .getElementById("maintenanceOverlay")
+        .style.display = "flex";
 
-        if (products.length === 0) {
-            container.innerHTML = `<div class="empty-state">Nenhum produto anunciado no momento.<br><span style="color:#333; font-size:11px; font-weight:normal;">Abra o painel do administrador abaixo para cadastrar.</span></div>`;
-            return;
+    document
+        .getElementById("mainContent")
+        .style.display = "none";
+
+}
+
+
+
+/* =========================================================
+   SEGURANÇA HTML
+   ========================================================= */
+
+function escapeHTML(str) {
+
+    if (str === null || str === undefined) {
+        return "";
+    }
+
+    return String(str).replace(
+        /[&<>'"]/g,
+
+        tag => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "'": "&#39;",
+            '"': "&quot;"
+        }[tag] || tag)
+    );
+
+}
+
+
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+
+function verificarAcessoAdmin() {
+
+    if (isAdminAutenticado) {
+
+        toggleAdminPanel();
+
+        return;
+    }
+
+    abrirModal("loginModal");
+
+    setTimeout(
+        () => {
+
+            document
+                .getElementById("adminPasswordInput")
+                .focus();
+
+        },
+        100
+    );
+
+}
+
+
+
+function confirmarLogin() {
+
+    const senha =
+        document
+            .getElementById("adminPasswordInput")
+            .value;
+
+    if (senha === SENHA_ADMIN) {
+
+        isAdminAutenticado = true;
+
+        document
+            .getElementById("adminPasswordInput")
+            .value = "";
+
+        fecharModal("loginModal");
+
+        mostrarToast(
+            "Acesso administrativo autorizado.",
+            "success"
+        );
+
+        toggleAdminPanel();
+
+        return;
+    }
+
+
+    mostrarToast(
+        "Senha incorreta.",
+        "error"
+    );
+
+}
+
+
+
+/* =========================================================
+   MODAIS
+   ========================================================= */
+
+function abrirModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+    if (modal) {
+        modal.style.display = "flex";
+    }
+
+}
+
+
+
+function fecharModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+    if (modal) {
+        modal.style.display = "none";
+    }
+
+}
+
+
+
+/* Fecha modal clicando fora */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target.classList.contains(
+                "modal-overlay"
+            )
+        ) {
+
+            event.target.style.display = "none";
+
         }
 
-        container.innerHTML = "";
-        products.forEach(product => {
-            const safeTitle = escapeHTML(product.title);
-            const safeOwner = escapeHTML(product.owner);
-            const safeDesc = escapeHTML(product.desc);
-            const safePrice = escapeHTML(product.price);
+    }
+);
 
-            const msgZap = encodeURIComponent(`Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na Locapp e fiquei interessado. Ainda está disponível?`);
-            const linkWhatsapp = `https://wa.me/${product.phone}?text=${msgZap}`;
 
-            // Exibe botões administrativos apenas se o painel estiver aberto e autenticado
-            const displayStyle = (isAdminAutenticado && document.getElementById('adminPanel').style.display === 'block') ? 'flex' : 'none';
+
+/* =========================================================
+   PAINEL ADMIN
+   ========================================================= */
+
+function toggleAdminPanel() {
+
+    if (!isAdminAutenticado) {
+        return;
+    }
+
+    const panel =
+        document.getElementById("adminPanel");
+
+    const isHidden =
+        panel.style.display === "none" ||
+        panel.style.display === "";
+
+    panel.style.display =
+        isHidden ? "block" : "none";
+
+
+    const adminActions =
+        document.querySelectorAll(
+            ".admin-actions"
+        );
+
+
+    adminActions.forEach(
+        box => {
+
+            box.style.display =
+                isHidden ? "flex" : "none";
+
+        }
+    );
+
+
+    if (isHidden) {
+
+        panel.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    } else {
+
+        resetarFormulario();
+
+    }
+
+
+    renderProducts();
+
+}
+
+
+
+/* =========================================================
+   MOEDA
+   ========================================================= */
+
+function formatarMoeda(campo) {
+
+    let valor =
+        campo.value.replace(/\D/g, "");
+
+    if (valor === "") {
+
+        campo.value = "";
+
+        return;
+    }
+
+    valor =
+        (parseFloat(valor) / 100)
+        .toFixed(2);
+
+    campo.value =
+        "R$ " +
+        valor
+            .replace(".", ",");
+}
+
+
+
+/* =========================================================
+   PREÇO PARA ARMAZENAMENTO
+   ========================================================= */
+
+function limparMoeda(valor) {
+
+    if (!valor) {
+        return "";
+    }
+
+    return String(valor)
+        .replace("R$", "")
+        .trim();
+
+}
+
+
+
+/* =========================================================
+   PREVIEW DA IMAGEM
+   ========================================================= */
+
+function previewImagem(input) {
+
+    const wrapper =
+        document.getElementById(
+            "imgPreviewWrapper"
+        );
+
+    const preview =
+        document.getElementById(
+            "panelImgPreview"
+        );
+
+    const url =
+        input.value.trim();
+
+
+    if (!url) {
+
+        wrapper.style.display = "none";
+
+        preview.removeAttribute("src");
+
+        return;
+    }
+
+
+    preview.src = url;
+
+    wrapper.style.display = "block";
+
+
+    preview.onerror = function() {
+
+        wrapper.style.display = "none";
+
+        mostrarToast(
+            "Não foi possível carregar essa imagem.",
+            "error"
+        );
+
+    };
+
+}
+
+
+
+/* =========================================================
+   RESET FORMULÁRIO
+   ========================================================= */
+
+function resetarFormulario() {
+
+    [
+        "ownerInput",
+        "titleInput",
+        "priceInput",
+        "phoneInput",
+        "imgInput",
+        "descInput",
+        "editIdInput"
+
+    ].forEach(
+        id => {
+
+            document
+                .getElementById(id)
+                .value = "";
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "imgPreviewWrapper"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "panelImgPreview"
+        )
+        .removeAttribute("src");
+
+
+    document
+        .getElementById(
+            "formTitle"
+        )
+        .innerText =
+            "Novo anúncio";
+
+
+    document
+        .getElementById(
+            "btnSubmitForm"
+        )
+        .innerText =
+            "Publicar anúncio";
+
+}
+
+
+
+/* =========================================================
+   SALVAR PRODUTO
+   ========================================================= */
+
+function saveProduct() {
+
+    if (!isAdminAutenticado) {
+        return;
+    }
+
+
+    const editId =
+        document
+            .getElementById(
+                "editIdInput"
+            )
+            .value;
+
+
+    const owner =
+        document
+            .getElementById(
+                "ownerInput"
+            )
+            .value
+            .trim();
+
+
+    const title =
+        document
+            .getElementById(
+                "titleInput"
+            )
+            .value
+            .trim();
+
+
+    const priceRaw =
+        document
+            .getElementById(
+                "priceInput"
+            )
+            .value
+            .trim();
+
+
+    const phone =
+        document
+            .getElementById(
+                "phoneInput"
+            )
+            .value
+            .replace(/\D/g, "");
+
+
+    const img =
+        document
+            .getElementById(
+                "imgInput"
+            )
+            .value
+            .trim();
+
+
+    const desc =
+        document
+            .getElementById(
+                "descInput"
+            )
+            .value
+            .trim();
+
+
+    if (
+        !owner ||
+        !title ||
+        !priceRaw ||
+        !phone ||
+        !desc
+    ) {
+
+        mostrarToast(
+            "Preencha todos os campos obrigatórios.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const finalImg =
+        img ||
+        "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800";
+
+
+    let products =
+        JSON.parse(
+            localStorage.getItem(
+                "locapp_marketplace"
+            )
+        ) || [];
+
+
+    if (editId) {
+
+        products =
+            products.map(
+                product => {
+
+                    if (
+                        String(product.id) ===
+                        String(editId)
+                    ) {
+
+                        return {
+                            id: product.id,
+                            owner,
+                            title,
+                            price: limparMoeda(
+                                priceRaw
+                            ),
+                            phone,
+                            img: finalImg,
+                            desc
+                        };
+
+                    }
+
+                    return product;
+
+                }
+            );
+
+
+        mostrarToast(
+            "Anúncio atualizado com sucesso.",
+            "success"
+        );
+
+    } else {
+
+        const newProduct = {
+
+            id: Date.now(),
+
+            owner,
+
+            title,
+
+            price:
+                limparMoeda(
+                    priceRaw
+                ),
+
+            phone,
+
+            img:
+                finalImg,
+
+            desc
+
+        };
+
+
+        products.unshift(
+            newProduct
+        );
+
+
+        mostrarToast(
+            "Anúncio publicado com sucesso.",
+            "success"
+        );
+
+    }
+
+
+    localStorage.setItem(
+        "locapp_marketplace",
+        JSON.stringify(products)
+    );
+
+
+    resetarFormulario();
+
+    renderProducts();
+
+}
+
+
+
+/* =========================================================
+   RENDERIZAÇÃO
+   ========================================================= */
+
+function renderProducts() {
+
+    const container =
+        document.getElementById(
+            "productsContainer"
+        );
+
+
+    let products =
+        JSON.parse(
+            localStorage.getItem(
+                "locapp_marketplace"
+            )
+        ) || [];
+
+
+    if (products.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🛍️
+                </div>
+
+                <strong>
+                    Nenhum anúncio disponível
+                </strong>
+
+                <span>
+                    Os novos produtos aparecerão aqui.
+                </span>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    products.forEach(
+        (product, index) => {
+
+            const safeTitle =
+                escapeHTML(
+                    product.title
+                );
+
+            const safeOwner =
+                escapeHTML(
+                    product.owner
+                );
+
+            const safeDesc =
+                escapeHTML(
+                    product.desc
+                );
+
+            const safePrice =
+                escapeHTML(
+                    product.price
+                );
+
+
+            const safeImg =
+                escapeHTML(
+                    product.img
+                );
+
+
+            const msgZap =
+                encodeURIComponent(
+                    `Olá ${safeOwner}! Vi seu anúncio do "${safeTitle}" por R$ ${safePrice} na AppLoc e fiquei interessado. Ainda está disponível?`
+                );
+
+
+            const linkWhatsapp =
+                `https://wa.me/${product.phone}?text=${msgZap}`;
+
+
+            const displayStyle =
+                (
+                    isAdminAutenticado &&
+                    document
+                        .getElementById(
+                            "adminPanel"
+                        )
+                        .style.display === "block"
+                )
+                ?
+                "flex"
+                :
+                "none";
+
 
             container.innerHTML += `
-                <div class="product-card">
-                    <div class="admin-actions" style="display: ${displayStyle};">
-                        <button class="btn-edit" title="Editar Anúncio" onclick="prepararEdicao(${product.id})">✏️</button>
-                        <button class="btn-delete" title="Excluir Anúncio" onclick="deleteProduct(${product.id})">X</button>
+
+                <article
+                    class="product-card"
+                    style="animation-delay:${index * 0.05}s"
+                >
+
+
+                    <div
+                        class="admin-actions"
+                        style="display:${displayStyle};"
+                    >
+
+                        <button
+                            class="admin-btn btn-edit"
+                            title="Editar anúncio"
+                            onclick="prepararEdicao(${product.id})"
+                        >
+                            ✏️
+                        </button>
+
+
+                        <button
+                            class="admin-btn btn-delete"
+                            title="Excluir anúncio"
+                            onclick="deleteProduct(${product.id})"
+                        >
+                            ×
+                        </button>
+
                     </div>
-                    
-                    
-<img src="${product.img}" class="product-img" alt="${safeTitle}" onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500'">
-                    <div class="product-owner">Anunciante: ${safeOwner}</div>
-                    <div class="product-title">${safeTitle}</div>
-                    <p class="product-desc">${safeDesc}</p>
+
+
+                    <div class="product-image-wrapper">
+
+                        <img
+                            src="${safeImg}"
+                            class="product-img"
+                            alt="${safeTitle}"
+                            loading="lazy"
+                            onerror="this.src='https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800'"
+                        >
+
+                        <div class="product-badge">
+                            Disponível
+                        </div>
+
+                    </div>
+
+
+                    <div class="product-owner">
+                        Anunciante: ${safeOwner}
+                    </div>
+
+
+                    <h2 class="product-title">
+                        ${safeTitle}
+                    </h2>
+
+
+                    <p class="product-desc">
+                        ${safeDesc}
+                    </p>
+
+
                     <div class="product-footer">
-                        <div class="product-price">R$ ${safePrice}</div>
-                        <a href="${linkWhatsapp}" target="_blank" class="btn-whatsapp">
+
+                        <div>
+
+                            <span class="price-label">
+                                Valor
+                            </span>
+
+                            <div class="product-price">
+                                R$ ${safePrice}
+                            </div>
+
+                        </div>
+
+
+                        <a
+                            href="${linkWhatsapp}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn-whatsapp"
+                        >
                             💬 Tenho Interesse
                         </a>
+
                     </div>
-                </div>
+
+                </article>
+
             `;
-        });
-    }
 
-    function prepararEdicao(id) {
-        if (!isAdminAutenticado) return;
-
-        let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
-        const item = products.find(p => p.id === id);
-
-        if (item) {
-            document.getElementById('editIdInput').value = item.id;
-            document.getElementById('ownerInput').value = item.owner;
-            document.getElementById('titleInput').value = item.title;
-            document.getElementById('priceInput').value = item.price;
-            document.getElementById('phoneInput').value = item.phone;
-            document.getElementById('imgInput').value = item.img;
-            document.getElementById('descInput').value = item.desc;
-
-            document.getElementById('formTitle').innerText = "Editar Anúncio";
-            document.getElementById('btnSubmitForm').innerText = "Salvar Alterações";
-
-            const panel = document.getElementById('adminPanel');
-            panel.style.display = 'block';
-            panel.scrollIntoView({ behavior: 'smooth' });
-            
-            previewImagem(document.getElementById('imgInput'));
         }
+    );
+
+}
+
+
+
+/* =========================================================
+   EDITAR
+   ========================================================= */
+
+function prepararEdicao(id) {
+
+    if (!isAdminAutenticado) {
+        return;
     }
 
-    function deleteProduct(id) {
-        if (!isAdminAutenticado) return;
 
-        if (confirm("Tem certeza que deseja remover este anúncio permanentemente?")) {
-            let products = JSON.parse(localStorage.getItem('locapp_marketplace')) || [];
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('locapp_marketplace', JSON.stringify(products));
-            renderProducts();
-        }
+    let products =
+        JSON.parse(
+            localStorage.getItem(
+                "locapp_marketplace"
+            )
+        ) || [];
+
+
+    const item =
+        products.find(
+            product =>
+                String(product.id) ===
+                String(id)
+        );
+
+
+    if (!item) {
+        return;
     }
+
+
+    document
+        .getElementById(
+            "editIdInput"
+        )
+        .value =
+            item.id;
+
+
+    document
+        .getElementById(
+            "ownerInput"
+        )
+        .value =
+            item.owner || "";
+
+
+    document
+        .getElementById(
+            "titleInput"
+        )
+        .value =
+            item.title || "";
+
+
+    document
+        .getElementById(
+            "priceInput"
+        )
+        .value =
+            item.price
+                ?
+                "R$ " +
+                String(item.price)
+                    .replace(".", ",")
+                :
+                "";
+
+
+    document
+        .getElementById(
+            "phoneInput"
+        )
+        .value =
+            item.phone || "";
+
+
+    document
+        .getElementById(
+            "imgInput"
+        )
+        .value =
+            item.img || "";
+
+
+    document
+        .getElementById(
+            "descInput"
+        )
+        .value =
+            item.desc || "";
+
+
+    document
+        .getElementById(
+            "formTitle"
+        )
+        .innerText =
+            "Editar anúncio";
+
+
+    document
+        .getElementById(
+            "btnSubmitForm"
+        )
+        .innerText =
+            "Salvar alterações";
+
+
+    previewImagem(
+        document.getElementById(
+            "imgInput"
+        )
+    );
+
+
+    const panel =
+        document.getElementById(
+            "adminPanel"
+        );
+
+
+    panel.style.display =
+        "block";
+
+
+    panel.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+
+    renderProducts();
+
+}
+
+
+
+/* =========================================================
+   EXCLUSÃO
+   ========================================================= */
+
+function deleteProduct(id) {
+
+    if (!isAdminAutenticado) {
+        return;
+    }
+
+
+    produtoParaExcluir = id;
+
+    abrirModal(
+        "confirmModal"
+    );
+
+}
+
+
+
+/* =========================================================
+   CONFIRMAR EXCLUSÃO
+   ========================================================= */
+
+function confirmarExclusao() {
+
+    if (
+        !isAdminAutenticado ||
+        produtoParaExcluir === null
+    ) {
+
+        fecharModal(
+            "confirmModal"
+        );
+
+        return;
+    }
+
+
+    let products =
+        JSON.parse(
+            localStorage.getItem(
+                "locapp_marketplace"
+            )
+        ) || [];
+
+
+    products =
+        products.filter(
+            product =>
+                String(product.id) !==
+                String(produtoParaExcluir)
+        );
+
+
+    localStorage.setItem(
+        "locapp_marketplace",
+        JSON.stringify(products)
+    );
+
+
+    produtoParaExcluir = null;
+
+
+    fecharModal(
+        "confirmModal"
+    );
+
+
+    resetarFormulario();
+
+
+    renderProducts();
+
+
+    mostrarToast(
+        "Anúncio removido com sucesso.",
+        "success"
+    );
+
+}
+
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function mostrarToast(
+    mensagem,
+    tipo = "success"
+) {
+
+    const container =
+        document.getElementById(
+            "toastContainer"
+        );
+
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+
+    toast.className =
+        "toast";
+
+
+    toast.innerHTML = `
+
+        <span class="toast-icon">
+            ${tipo === "error" ? "⚠️" : "✓"}
+        </span>
+
+        <span>
+            ${escapeHTML(mensagem)}
+        </span>
+
+    `;
+
+
+    container.innerHTML = "";
+
+    container.appendChild(
+        toast
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.style.opacity = "0";
+
+            toast.style.transform =
+                "translateY(10px)";
+
+            toast.style.transition =
+                "0.25s ease";
+
+
+            setTimeout(
+                () => {
+
+                    toast.remove();
+
+                },
+                250
+            );
+
+        },
+        3000
+    );
+
+}
+
+
 </script>
+
 </body>
 </html>
