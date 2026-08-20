@@ -24,9 +24,9 @@ document.getElementById("formContato").addEventListener("submit", function(e){
     let nome = this.querySelector("input[type=text]").value;
     let msg = this.querySelector("textarea").value;
 
-    let texto = `Olá, meu nome é ${nome}. ${msg}`;
+    let texto = `Olá, me chamo ${nome}. Gostaria de saber mais sobre os sistemas da AppLoc. ${msg}`;
 
-    let url = `https://wa.me/5584987553068?text=${encodeURIComponent(texto)}`;
+    let url = `https://wa.me/5584999999999?text=${encodeURIComponent(texto)}`;
 
     window.open(url, "_blank");
 });
