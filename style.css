@@ -22,6 +22,7 @@ header {
     width:100%;
     padding:20px 0;
     transition:0.3s;
+    z-index:1000;
 }
 
 header.scrolled {
@@ -180,6 +181,19 @@ footer {
     text-align:center;
     padding:20px;
     color:#777;
+}
+
+/* WHATSAPP FLOAT */
+.whatsapp-float {
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    color:#fff;
+    padding:15px;
+    border-radius:50%;
+    text-decoration:none;
+    font-size:22px;
 }
 
 /* ANIMAÇÃO */
